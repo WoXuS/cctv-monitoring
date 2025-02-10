@@ -1,0 +1,21 @@
+.tabs__wrapper {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  padding: 4px;
+}
+
+.tab {
+  border-radius: 2px;
+  padding: 6px 12px;
+  color: var(--light-gray);
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-weight: 700;
+}
+
+.--active {
+  background-color: var(--light-gray);
+  color: var(--white);
+}

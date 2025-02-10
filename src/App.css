@@ -1,0 +1,25 @@
+.container {
+  width: 100dvw;
+  height: 100dvh;
+  background-color: var(--dark-gray);
+}
+
+.main {
+  width: 100%;
+  height: calc(100% - 100px);
+  border: 14px solid var(--gray);
+  display: flex;
+}
+
+.section--left {
+  display: flex;
+  flex-direction: column;
+  width: 640px;
+  border-right: 14px solid var(--gray);
+  height: 100%;
+}
+
+.section--right {
+  width: calc(100% - 640px);
+  height: 100%;
+}

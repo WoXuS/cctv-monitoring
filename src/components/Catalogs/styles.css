@@ -1,0 +1,50 @@
+.catalogs__wrapper {
+  display: flex;
+  padding: 4px;
+  height: 100%;
+}
+
+.catalogs__catalogs {
+  flex: 3;
+  border-right: 8px solid var(--gray);
+}
+
+.catalogs__folders {
+  flex: 4;
+  border-right: 8px solid var(--gray);
+}
+
+.catalogs__cameras {
+  flex: 3;
+}
+
+.section__header {
+  background-color: var(--gray);
+  padding: 12px 0;
+  text-align: center;
+  color: var(--white);
+  font-size: 18px;
+}
+
+.section__wrapper {
+  margin-top: 6px;
+}
+
+.section__row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--white);
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 4px 6px;
+}
+
+.section__row:hover {
+  background-color: var(--blue);
+  color: var(--black);
+}
+
+.section__row:hover > svg > path {
+  fill: var(--light-blue);
+}

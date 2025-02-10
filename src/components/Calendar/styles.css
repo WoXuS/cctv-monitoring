@@ -1,0 +1,103 @@
+.calendar__wrapper {
+  display: flex;
+  border-bottom: 8px solid var(--gray);
+}
+
+.calendar__details {
+  padding: 4px;
+  border-right: 8px solid var(--gray);
+  width: 150px;
+  flex: 3;
+}
+
+.calendar__details > p {
+  width: 100%;
+  background-color: var(--gray);
+  color: var(--white);
+  padding: 6px;
+}
+
+.input {
+  background-color: transparent;
+  color: var(--white);
+  outline: 0;
+  border: 2px solid var(--gray);
+  padding: 4px;
+  width: fit-content;
+  font-size: 16px;
+}
+
+.date-picker {
+  outline: 0;
+  border: none;
+  background-color: #333333;
+  color: var(--white);
+  font-size: 16px;
+  width: 100%;
+  padding: 8px;
+}
+
+.date-picker__wrapper {
+  padding: 12px;
+}
+
+.date-picker__headline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+
+.time__wrapper {
+  color: var(--white);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.calendar__calendar {
+  flex: 5;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 4px;
+}
+
+.calendar__controls {
+  display: flex;
+}
+
+.calendar__control {
+  flex: 1;
+  background-color: var(--gray);
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  color: var(--white);
+}
+
+.calendar__days {
+  display: flex;
+  background-color: var(--gray);
+}
+
+.calendar__day {
+  flex: 1;
+  text-align: center;
+  padding: 8px 0;
+}
+
+.days-wrapper {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.day {
+  text-align: center;
+  padding: 6px;
+  cursor: pointer;
+  width: 32px;
+  margin: auto;
+}
