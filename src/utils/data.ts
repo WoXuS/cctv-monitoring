@@ -131,7 +131,7 @@ export const catalogsData: Catalog[] = [
                 time: '01:34:02',
               },
               {
-                url: '/videos/4.mp4',
+                url: '/videos/10.mp4',
                 time: '01:48:34',
               },
               {
