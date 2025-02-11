@@ -5,7 +5,6 @@ import './styles.css';
 import { COLORS } from '../../utils/colors';
 import { useMediaPlayerContext } from '../../contexts/mediaPlayerContext';
 import { Camera } from '../../types/catalogs';
-import { setHours, setMinutes, setSeconds } from 'date-fns';
 
 const Catalogs = () => {
   const {
@@ -17,17 +16,19 @@ const Catalogs = () => {
     setSelectedFolder,
     setSelectedCamera,
     setCameraSequenceStep,
-    setCurrentTime,
   } = useMediaPlayerContext();
 
   const handleCameraClick = (camera: Camera) => {
-    setCameraSequenceStep(0);
-    setSelectedCamera(camera);
+    if (
+      camera.name === 'CAM_041' &&
+      catalogsData[0].folders[12].cameras[0].disabled
+    ) {
+      setCameraSequenceStep(4);
+    } else {
+      setCameraSequenceStep(0);
+    }
 
-    const [hours, minutes, seconds] = camera.videos[0].time.split(':');
-    setCurrentTime((prevState) =>
-      setHours(setMinutes(setSeconds(prevState, +seconds), +minutes), +hours)
-    );
+    setSelectedCamera(camera);
   };
 
   return (

@@ -117,6 +117,7 @@ export const MediaPlayerContextProvider = ({
   }, [selectedCamera, cameraSequenceStep]);
 
   const handleResetAppState = () => {
+    setCatalogsData(initialCatalogsData);
     setSelectedCatalog(null);
     setSelectedFolder(null);
     setSelectedCamera(null);

@@ -61,7 +61,7 @@ export const catalogsData: Catalog[] = [
             videos: [
               {
                 url: '/videos/42.mp4',
-                time: '02:10:01',
+                startTime: '02:10:01',
               },
             ],
             sequence: [],
@@ -77,7 +77,8 @@ export const catalogsData: Catalog[] = [
             videos: [
               {
                 url: '/videos/40.mp4',
-                time: '02:06:18',
+                startTime: '02:08:50',
+                endTime: '02:09:24',
               },
             ],
             sequence: [],
@@ -89,7 +90,7 @@ export const catalogsData: Catalog[] = [
             videos: [
               {
                 url: '/videos/39.mp4',
-                time: '02:06:18',
+                startTime: '02:06:18',
               },
             ],
             sequence: [],
@@ -114,24 +115,24 @@ export const catalogsData: Catalog[] = [
             videos: [
               {
                 url: '/videos/13-14-15.mp4',
-                time: '01:48:43',
+                startTime: '01:48:43',
               },
               {
                 url: '/videos/19-26.mp4',
-                time: '01:50:06',
+                startTime: '01:50:06',
               },
               {
                 type: 'image',
                 url: '/images/unavailable.png',
-                time: '01:50:06',
+                startTime: '01:50:06',
               },
               {
                 url: '/videos/22.mp4',
-                time: '01:52:20',
+                startTime: '01:52:20',
               },
               {
                 url: '/videos/28.mp4',
-                time: '01:52:20',
+                startTime: '01:52:20',
               },
             ],
             sequence: ['skip', 'play', 'rewind', 'play'],
@@ -143,23 +144,28 @@ export const catalogsData: Catalog[] = [
             videos: [
               {
                 url: '/videos/4.mp4',
-                time: '04:03:03',
+                startTime: '04:03:03',
+                endTime: '01:34:17',
               },
               {
                 url: '/videos/6.mp4',
-                time: '01:33:44',
+                startTime: '01:33:44',
+                endTime: '01:33:49',
               },
               {
                 url: '/videos/8.mp4',
-                time: '01:34:02',
+                startTime: '01:34:02',
+                endTime: '01:48:37',
               },
               {
                 url: '/videos/10.mp4',
-                time: '01:48:34',
+                startTime: '01:48:34',
+                endTime: '01:48:29',
               },
               {
                 url: '/videos/32.mp4',
-                time: '01:52:13',
+                startTime: '01:52:13',
+                endTime: '01:52:35',
               },
             ],
             sequence: ['pause', 'play', 'rewind'],
@@ -170,7 +176,7 @@ export const catalogsData: Catalog[] = [
             videos: [
               {
                 url: '/videos/34.mp4',
-                time: '01:52:35',
+                startTime: '01:52:35',
               },
             ],
             sequence: [],
@@ -181,7 +187,7 @@ export const catalogsData: Catalog[] = [
             videos: [
               {
                 url: '/videos/36.mp4',
-                time: '01:54:27',
+                startTime: '01:54:27',
               },
             ],
             sequence: [],
@@ -192,7 +198,7 @@ export const catalogsData: Catalog[] = [
             videos: [
               {
                 url: '/videos/37.mp4',
-                time: '01:55:10',
+                startTime: '01:55:10',
               },
             ],
             sequence: [],

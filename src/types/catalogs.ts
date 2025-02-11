@@ -4,7 +4,8 @@ export interface Camera {
   videos: {
     type?: string;
     url: string;
-    time: string;
+    startTime: string;
+    endTime?: string;
   }[];
   sequence: SequenceStepStype[];
   onSequenceEnd?: string;

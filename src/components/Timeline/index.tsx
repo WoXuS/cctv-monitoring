@@ -1,11 +1,15 @@
-import { addSeconds, format } from 'date-fns';
+import { addMilliseconds, format } from 'date-fns';
 import { useMediaPlayerContext } from '../../contexts/mediaPlayerContext';
 import { timelineLabels } from '../../utils/data';
 import { useEffect } from 'react';
 
 import './styles.css';
 
-const Timeline = () => {
+interface TimelineProps {
+  timeRatio: number;
+}
+
+const Timeline = ({ timeRatio }: TimelineProps) => {
   const {
     cameraSequenceStep,
     videoUrl,
@@ -14,9 +18,9 @@ const Timeline = () => {
     playbackSpeed,
     currentTime,
     timelineMarkerOffset,
-    setCameraSequenceStep,
     setTimelineMarkerOffset,
     setCurrentTime,
+    setCameraSequenceStep,
   } = useMediaPlayerContext();
 
   const handleUpdateSequenceStep = () => {
@@ -37,14 +41,14 @@ const Timeline = () => {
     if (!videoUrl) return;
 
     const interval = setInterval(() => {
+      setCurrentTime((prevState) => addMilliseconds(prevState, 50 * timeRatio));
       setTimelineMarkerOffset((prevState) => prevState - 1);
-      setCurrentTime((prevState) => addSeconds(prevState, 72));
-    }, 50 / playbackSpeed);
+    }, 50);
 
     if (!isPlaying) clearInterval(interval);
 
     return () => clearInterval(interval);
-  }, [isPlaying, videoUrl, playbackSpeed]);
+  }, [isPlaying, videoUrl, playbackSpeed, cameraSequenceStep]);
 
   return (
     <div className='media-player__timeline' onClick={handleUpdateSequenceStep}>

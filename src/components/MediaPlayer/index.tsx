@@ -22,6 +22,12 @@ import { COLORS } from '../../utils/colors';
 import { useMediaPlayerContext } from '../../contexts/mediaPlayerContext';
 import Timeline from '../Timeline';
 import { SequenceStepStype } from '../../types/catalogs';
+import {
+  differenceInSeconds,
+  setHours,
+  setMinutes,
+  setSeconds,
+} from 'date-fns';
 
 const iconStyles = {
   color: COLORS.lightGray,
@@ -44,6 +50,8 @@ const MediaPlayer = () => {
     shouldAutoplay,
     shouldLoad,
     shouldShowVideoName,
+    currentDay,
+    setCurrentTime,
     setCatalogsData,
     setPlaybackSpeed,
     setIsPlaying,
@@ -54,6 +62,7 @@ const MediaPlayer = () => {
 
   const [volume, setVolume] = useState(35);
   const [isLoading, setIsLoading] = useState(false);
+  const [timeRatio, setTimeRatio] = useState(1);
 
   const handleUpdateVolume = (_: Event, newValue: number | number[]) => {
     setVolume(newValue as number);
@@ -78,12 +87,6 @@ const MediaPlayer = () => {
     if (!selectedCamera) return;
 
     const newStep = cameraSequenceStep + 1;
-
-    console.log({
-      newStep,
-      videos: selectedCamera.videos.length,
-      selectedCamera,
-    });
 
     if (newStep < selectedCamera.videos.length) {
       if (control === 'play' && isPlaying === false) {
@@ -127,6 +130,31 @@ const MediaPlayer = () => {
     }
   };
 
+  const handleSetTimeline = (videoDuration: number) => {
+    if (!selectedCamera || !selectedCamera.videos[cameraSequenceStep].endTime)
+      return;
+
+    const [startHours, startMinutes, startSeconds] =
+      selectedCamera.videos[cameraSequenceStep].startTime.split(':');
+    const [endHours, endMinutes, endSeconds] =
+      selectedCamera.videos[cameraSequenceStep].endTime.split(':');
+
+    const startTime = setHours(
+      setMinutes(setSeconds(currentDay, +startSeconds), +startMinutes),
+      +startHours
+    );
+    const endTime = setHours(
+      setMinutes(setSeconds(currentDay, +endSeconds), +endMinutes),
+      +endHours
+    );
+
+    const diff = differenceInSeconds(endTime, startTime);
+    const ratio = diff / Math.floor(videoDuration);
+
+    setTimeRatio(ratio);
+    setCurrentTime(startTime);
+  };
+
   useEffect(() => {
     if (!videoUrl || !selectedCamera) return;
 
@@ -160,6 +188,7 @@ const MediaPlayer = () => {
               playing={isPlaying}
               playbackRate={playbackSpeed}
               onEnded={handleVideoEnded}
+              onDuration={handleSetTimeline}
             />
           )
         ) : null}
@@ -228,7 +257,7 @@ const MediaPlayer = () => {
           </IconButton>
         </div>
       </div>
-      <Timeline />
+      <Timeline timeRatio={timeRatio} />
     </div>
   );
 };
