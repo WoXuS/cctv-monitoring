@@ -12,6 +12,7 @@ const Catalogs = () => {
   const {
     folders,
     cameras,
+    selectedCamera,
     setFolders,
     setCameras,
     setSelectedCamera,
@@ -37,7 +38,11 @@ const Catalogs = () => {
           {catalogsData.map((catalog) => (
             <div
               key={catalog.name}
-              className='section__row'
+              className={`${
+                catalog.folders?.[0]?.name === folders?.[0]?.name
+                  ? '--selected '
+                  : ''
+              }section__row`}
               onClick={() => setFolders(catalog.folders)}
             >
               <FolderIcon sx={{ color: COLORS.blue }} />
@@ -52,7 +57,11 @@ const Catalogs = () => {
           {folders.map((folder, index) => (
             <div
               key={folder.name}
-              className='section__row'
+              className={`${
+                folder.cameras?.[0]?.name === cameras?.[0]?.name
+                  ? '--selected '
+                  : ''
+              }section__row`}
               onClick={() => setCameras(folder.cameras)}
             >
               <FolderIcon sx={{ color: COLORS.blue }} />
@@ -69,7 +78,9 @@ const Catalogs = () => {
           {cameras.map((camera) => (
             <div
               key={camera.name}
-              className='section__row'
+              className={`${
+                camera.name === selectedCamera?.name ? '--selected ' : ''
+              }section__row`}
               onClick={() => handleCameraClick(camera)}
             >
               <p>{camera.name}</p>

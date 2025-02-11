@@ -41,3 +41,7 @@
   align-items: center;
   justify-content: center;
 }
+
+.current-video-name {
+  color: red;
+}

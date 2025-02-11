@@ -120,7 +120,7 @@ export const catalogsData: Catalog[] = [
             videos: [
               {
                 url: '/videos/4.mp4',
-                time: '01:34:17',
+                time: '04:03:03',
               },
               {
                 url: '/videos/6.mp4',

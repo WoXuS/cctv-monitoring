@@ -41,6 +41,8 @@ interface MediaPlayerContextProps {
   setShouldAutoplay: Dispatch<SetStateAction<boolean>>;
   shouldLoad: boolean;
   setShouldLoad: Dispatch<SetStateAction<boolean>>;
+  shouldShowVideoName: boolean;
+  setShouldShowVideoName: Dispatch<SetStateAction<boolean>>;
   handleResetAppState: () => void;
 }
 
@@ -78,6 +80,8 @@ export const MediaPlayerContext = createContext<MediaPlayerContextProps>({
   setShouldAutoplay: () => {},
   shouldLoad: false,
   setShouldLoad: () => {},
+  shouldShowVideoName: false,
+  setShouldShowVideoName: () => {},
   handleResetAppState: () => {},
 });
 
@@ -95,9 +99,10 @@ export const MediaPlayerContextProvider = ({
   const [currentTime, setCurrentTime] = useState<Date>(startOfToday());
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [playbackSpeed, setPlaybackSpeed] = useState<number>(1);
-  const [settingsModalOpen, setSettingsModalOpen] = useState(true);
+  const [settingsModalOpen, setSettingsModalOpen] = useState(false);
   const [shouldAutoplay, setShouldAutoplay] = useState(false);
   const [shouldLoad, setShouldLoad] = useState(false);
+  const [shouldShowVideoName, setShouldShowVideoName] = useState(false);
 
   const videoUrl = useMemo(() => {
     if (!selectedCamera || !selectedCamera.videos.length) return null;
@@ -112,10 +117,11 @@ export const MediaPlayerContextProvider = ({
     setCurrentDay(DEFAULT_DATE);
     setCurrentMonth(DEFAULT_MONTH);
     setCurrentYear(DEFAULT_YEAR);
+    setCurrentTime(startOfToday());
     setCameraSequenceStep(0);
     setTimelineMarkerOffset(12);
     setCurrentTime(startOfToday());
-    setIsPlaying(true);
+    setIsPlaying(false);
     setPlaybackSpeed(1);
   };
 
@@ -151,6 +157,8 @@ export const MediaPlayerContextProvider = ({
         setShouldAutoplay,
         shouldLoad,
         setShouldLoad,
+        shouldShowVideoName,
+        setShouldShowVideoName,
         handleResetAppState,
       }}
     >

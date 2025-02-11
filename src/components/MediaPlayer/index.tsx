@@ -44,6 +44,7 @@ const MediaPlayer = () => {
     cameraSequenceStep,
     shouldAutoplay,
     shouldLoad,
+    shouldShowVideoName,
     setPlaybackSpeed,
     setIsPlaying,
     setCameraSequenceStep,
@@ -77,16 +78,30 @@ const MediaPlayer = () => {
 
     const newStep = cameraSequenceStep + 1;
 
+    if (control === 'play' && isPlaying === false) {
+      setIsPlaying(true);
+      return;
+    }
+
     if (
       selectedCamera.sequence[cameraSequenceStep] === control &&
       newStep < selectedCamera.videos.length
     ) {
       setCameraSequenceStep(newStep);
+    } else if (control !== 'pause') {
+      setIsPlaying(true);
     }
   };
 
   const handleVideoEnded = () => {
+    if (!selectedCamera) return;
+
     setIsPlaying(false);
+
+    const newStep = cameraSequenceStep + 1;
+    if (newStep < selectedCamera.videos.length) {
+      setCameraSequenceStep(newStep);
+    }
   };
 
   useEffect(() => {
@@ -125,6 +140,9 @@ const MediaPlayer = () => {
         ) : selectedCamera?.disabled ? (
           <img src={unavailable} />
         ) : null}
+        {shouldShowVideoName && (
+          <div className='current-video-name'>{videoUrl}</div>
+        )}
       </div>
       <div className='media-player__controls'>
         <div className='controls__volume'>
