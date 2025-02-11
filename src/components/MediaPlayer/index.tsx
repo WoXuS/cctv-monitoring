@@ -148,7 +148,7 @@ const MediaPlayer = () => {
         <div className='controls__volume'>
           <VolumeUp sx={{ ...iconStyles, width: 30, height: 30 }} />
           <Slider
-            value={35}
+            value={volume}
             onChange={handleUpdateVolume}
             sx={{
               color: COLORS.lightGray,
