@@ -5,8 +5,9 @@ import './styles.css';
 import { COLORS } from '../../utils/colors';
 import { useMediaPlayerContext } from '../../contexts/mediaPlayerContext';
 import { catalogsData } from '../../utils/data';
-import { Camera } from '../../types/catalogs';
+import { Camera, Catalog, Folder } from '../../types/catalogs';
 import { setHours, setMinutes, setSeconds } from 'date-fns';
+import { useState } from 'react';
 
 const Catalogs = () => {
   const {
@@ -19,6 +20,18 @@ const Catalogs = () => {
     setCameraSequenceStep,
     setCurrentTime,
   } = useMediaPlayerContext();
+  const [selectedCatalog, setSelectedCatalog] = useState<Catalog | null>(null);
+  const [selectedFolder, setSelectedFolder] = useState<Folder | null>(null);
+
+  const handleCatalogClick = (catalog: Catalog) => {
+    setSelectedCatalog(catalog);
+    setFolders(catalog.folders);
+  };
+
+  const handleFolderClick = (folder: Folder) => {
+    setSelectedFolder(folder);
+    setCameras(folder.cameras);
+  };
 
   const handleCameraClick = (camera: Camera) => {
     setCameraSequenceStep(0);
@@ -39,11 +52,11 @@ const Catalogs = () => {
             <div
               key={catalog.name}
               className={`${
-                catalog.folders?.[0]?.name === folders?.[0]?.name
+                selectedCatalog && selectedCatalog.name === catalog.name
                   ? '--selected '
                   : ''
               }section__row`}
-              onClick={() => setFolders(catalog.folders)}
+              onClick={() => handleCatalogClick(catalog)}
             >
               <FolderIcon sx={{ color: COLORS.blue }} />
               <p>{catalog.name}</p>
@@ -58,11 +71,11 @@ const Catalogs = () => {
             <div
               key={folder.name}
               className={`${
-                folder.cameras?.[0]?.name === cameras?.[0]?.name
+                selectedFolder && selectedFolder.name === folder.name
                   ? '--selected '
                   : ''
               }section__row`}
-              onClick={() => setCameras(folder.cameras)}
+              onClick={() => handleFolderClick(folder)}
             >
               <FolderIcon sx={{ color: COLORS.blue }} />
               <p>{`${index < 9 ? `0${index + 1}` : index + 1}_${
