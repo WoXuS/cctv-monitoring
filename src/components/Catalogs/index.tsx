@@ -6,6 +6,7 @@ import { COLORS } from '../../utils/colors';
 import { useMediaPlayerContext } from '../../contexts/mediaPlayerContext';
 import { catalogsData } from '../../utils/data';
 import { Camera } from '../../types/catalogs';
+import { setHours, setMinutes, setSeconds } from 'date-fns';
 
 const Catalogs = () => {
   const {
@@ -15,11 +16,17 @@ const Catalogs = () => {
     setCameras,
     setSelectedCamera,
     setCameraSequenceStep,
+    setCurrentTime,
   } = useMediaPlayerContext();
 
   const handleCameraClick = (camera: Camera) => {
     setCameraSequenceStep(0);
     setSelectedCamera(camera);
+
+    const [hours, minutes, seconds] = camera.videos[0].time.split(':');
+    setCurrentTime((prevState) =>
+      setHours(setMinutes(setSeconds(prevState, +seconds), +minutes), +hours)
+    );
   };
 
   return (

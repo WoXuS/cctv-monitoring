@@ -9,6 +9,7 @@ import {
 } from 'react';
 import { Camera, Folder } from '../types/catalogs';
 import { startOfToday } from 'date-fns';
+import { DEFAULT_DATE, DEFAULT_MONTH, DEFAULT_YEAR } from '../utils/defaults';
 
 interface MediaPlayerContextProps {
   folders: Folder[];
@@ -28,12 +29,18 @@ interface MediaPlayerContextProps {
   setCameraSequenceStep: Dispatch<SetStateAction<number>>;
   timelineMarkerOffset: number;
   setTimelineMarkerOffset: Dispatch<SetStateAction<number>>;
-  currentTimelineTime: Date;
-  setCurrentTimelineTime: Dispatch<SetStateAction<Date>>;
+  currentTime: Date;
+  setCurrentTime: Dispatch<SetStateAction<Date>>;
   isPlaying: boolean;
   setIsPlaying: Dispatch<SetStateAction<boolean>>;
   playbackSpeed: number;
   setPlaybackSpeed: Dispatch<SetStateAction<number>>;
+  settingsModalOpen: boolean;
+  setSettingsModalOpen: Dispatch<SetStateAction<boolean>>;
+  shouldAutoplay: boolean;
+  setShouldAutoplay: Dispatch<SetStateAction<boolean>>;
+  shouldLoad: boolean;
+  setShouldLoad: Dispatch<SetStateAction<boolean>>;
   handleResetAppState: () => void;
 }
 
@@ -59,49 +66,55 @@ export const MediaPlayerContext = createContext<MediaPlayerContextProps>({
   setCameraSequenceStep: () => {},
   timelineMarkerOffset: 12,
   setTimelineMarkerOffset: () => {},
-  currentTimelineTime: startOfToday(),
-  setCurrentTimelineTime: () => {},
+  currentTime: startOfToday(),
+  setCurrentTime: () => {},
   isPlaying: true,
   setIsPlaying: () => {},
   playbackSpeed: 1,
   setPlaybackSpeed: () => {},
+  settingsModalOpen: false,
+  setSettingsModalOpen: () => {},
+  shouldAutoplay: false,
+  setShouldAutoplay: () => {},
+  shouldLoad: false,
+  setShouldLoad: () => {},
   handleResetAppState: () => {},
 });
 
 export const MediaPlayerContextProvider = ({
   children,
 }: MediaPlayerContextProviderProps) => {
-  const today = new Date();
-  const [currentDay, setCurrentDay] = useState<Date>(new Date('2022-09-17'));
-  const [currentMonth, setCurrentMonth] = useState<number>(9);
-  const [currentYear, setCurrentYear] = useState<number>(2022);
+  const [currentDay, setCurrentDay] = useState<Date>(DEFAULT_DATE);
+  const [currentMonth, setCurrentMonth] = useState<number>(DEFAULT_MONTH);
+  const [currentYear, setCurrentYear] = useState<number>(DEFAULT_YEAR);
   const [folders, setFolders] = useState<Folder[]>([]);
   const [cameras, setCameras] = useState<Camera[]>([]);
   const [selectedCamera, setSelectedCamera] = useState<Camera | null>(null);
   const [cameraSequenceStep, setCameraSequenceStep] = useState<number>(0);
   const [timelineMarkerOffset, setTimelineMarkerOffset] = useState<number>(12);
-  const [currentTimelineTime, setCurrentTimelineTime] = useState<Date>(
-    startOfToday()
-  );
-  const [isPlaying, setIsPlaying] = useState<boolean>(true);
+  const [currentTime, setCurrentTime] = useState<Date>(startOfToday());
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [playbackSpeed, setPlaybackSpeed] = useState<number>(1);
+  const [settingsModalOpen, setSettingsModalOpen] = useState(true);
+  const [shouldAutoplay, setShouldAutoplay] = useState(false);
+  const [shouldLoad, setShouldLoad] = useState(false);
 
   const videoUrl = useMemo(() => {
     if (!selectedCamera || !selectedCamera.videos.length) return null;
 
-    return `/videos/${selectedCamera.videos[cameraSequenceStep]}.mp4`;
+    return selectedCamera.videos[cameraSequenceStep].url;
   }, [selectedCamera, cameraSequenceStep]);
 
   const handleResetAppState = () => {
     setFolders([]);
     setCameras([]);
     setSelectedCamera(null);
-    setCurrentDay(today);
-    setCurrentMonth(today.getMonth() + 1);
-    setCurrentYear(today.getFullYear());
+    setCurrentDay(DEFAULT_DATE);
+    setCurrentMonth(DEFAULT_MONTH);
+    setCurrentYear(DEFAULT_YEAR);
     setCameraSequenceStep(0);
     setTimelineMarkerOffset(12);
-    setCurrentTimelineTime(startOfToday());
+    setCurrentTime(startOfToday());
     setIsPlaying(true);
     setPlaybackSpeed(1);
   };
@@ -126,12 +139,18 @@ export const MediaPlayerContextProvider = ({
         setCameraSequenceStep,
         timelineMarkerOffset,
         setTimelineMarkerOffset,
-        currentTimelineTime,
-        setCurrentTimelineTime,
+        currentTime,
+        setCurrentTime,
         isPlaying,
         setIsPlaying,
         playbackSpeed,
         setPlaybackSpeed,
+        settingsModalOpen,
+        setSettingsModalOpen,
+        shouldAutoplay,
+        setShouldAutoplay,
+        shouldLoad,
+        setShouldLoad,
         handleResetAppState,
       }}
     >

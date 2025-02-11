@@ -1,6 +1,11 @@
 import ReactPlayer from 'react-player';
-import { useState } from 'react';
-import { IconButton, Slider, Typography } from '@mui/material';
+import { useEffect, useState } from 'react';
+import {
+  CircularProgress,
+  IconButton,
+  Slider,
+  Typography,
+} from '@mui/material';
 import unavailable from '../../assets/images/unavailable.png';
 
 import './styles.css';
@@ -17,11 +22,17 @@ import EjectIcon from '@mui/icons-material/Eject';
 import { COLORS } from '../../utils/colors';
 import { useMediaPlayerContext } from '../../contexts/mediaPlayerContext';
 import Timeline from '../Timeline';
+import { SequenceStepStype } from '../../types/catalogs';
 
 const iconStyles = {
   color: COLORS.lightGray,
   width: 50,
   height: 50,
+};
+
+const activeButtonStyles = {
+  backgroundColor: COLORS.gray,
+  svg: { path: { fill: COLORS.white } },
 };
 
 const MediaPlayer = () => {
@@ -30,11 +41,17 @@ const MediaPlayer = () => {
     selectedCamera,
     playbackSpeed,
     isPlaying,
+    cameraSequenceStep,
+    shouldAutoplay,
+    shouldLoad,
     setPlaybackSpeed,
     setIsPlaying,
+    setCameraSequenceStep,
+    setSettingsModalOpen,
   } = useMediaPlayerContext();
 
   const [volume, setVolume] = useState(35);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleUpdateVolume = (_: Event, newValue: number | number[]) => {
     setVolume(newValue as number);
@@ -45,21 +62,66 @@ const MediaPlayer = () => {
     setPlaybackSpeed(newStep);
   };
 
-  console.log(selectedCamera);
+  const handlePlayPauseClick = (play: boolean) => {
+    if (!selectedCamera) return;
+
+    setIsPlaying(play);
+
+    const control = play ? 'play' : 'pause';
+
+    handleSequenceControlClick(control);
+  };
+
+  const handleSequenceControlClick = (control: SequenceStepStype) => {
+    if (!selectedCamera) return;
+
+    const newStep = cameraSequenceStep + 1;
+
+    if (
+      selectedCamera.sequence[cameraSequenceStep] === control &&
+      newStep < selectedCamera.videos.length
+    ) {
+      setCameraSequenceStep(newStep);
+    }
+  };
+
+  const handleVideoEnded = () => {
+    setIsPlaying(false);
+  };
+
+  useEffect(() => {
+    if (!videoUrl) return;
+
+    if (shouldAutoplay) {
+      setIsPlaying(true);
+    }
+
+    if (shouldLoad) {
+      setIsLoading(true);
+      setTimeout(() => setIsLoading(false), 500);
+    }
+  }, [videoUrl]);
 
   return (
     <div className='media-player__wrapper'>
       <div className='media-player__video'>
         {videoUrl ? (
-          <ReactPlayer
-            url={videoUrl}
-            height={'100%'}
-            width={'100%'}
-            volume={0}
-            muted
-            playing={isPlaying}
-            playbackRate={playbackSpeed}
-          />
+          isLoading ? (
+            <div className='loader'>
+              <CircularProgress size={120} />
+            </div>
+          ) : (
+            <ReactPlayer
+              url={videoUrl}
+              height={'100%'}
+              width={'100%'}
+              volume={0}
+              muted
+              playing={isPlaying}
+              playbackRate={playbackSpeed}
+              onEnded={handleVideoEnded}
+            />
+          )
         ) : selectedCamera?.disabled ? (
           <img src={unavailable} />
         ) : null}
@@ -77,13 +139,19 @@ const MediaPlayer = () => {
           />
         </div>
         <div className='controls__controls'>
-          <IconButton>
+          <IconButton onClick={() => handleSequenceControlClick('rewind')}>
             <FastRewindIcon sx={iconStyles} />
           </IconButton>
-          <IconButton onClick={() => setIsPlaying(false)}>
+          <IconButton
+            onClick={() => handlePlayPauseClick(false)}
+            sx={videoUrl && !isPlaying ? activeButtonStyles : {}}
+          >
             <PauseIcon sx={iconStyles} />
           </IconButton>
-          <IconButton onClick={() => setIsPlaying(true)}>
+          <IconButton
+            onClick={() => handlePlayPauseClick(true)}
+            sx={videoUrl && isPlaying ? activeButtonStyles : {}}
+          >
             <PlayArrowIcon sx={iconStyles} />
           </IconButton>
           <IconButton onClick={() => setIsPlaying(false)}>
@@ -97,17 +165,22 @@ const MediaPlayer = () => {
           </IconButton>
           <IconButton onClick={handleUpdatePlaybackSpeed}>
             <Typography
-              color={COLORS.lightGray}
-              fontWeight={700}
-              fontSize={26}
+              sx={{
+                ...iconStyles,
+                fontWeight: 700,
+                fontSize: 28,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
             >{`X${playbackSpeed}`}</Typography>
           </IconButton>
-          <IconButton>
+          <IconButton onClick={() => handleSequenceControlClick('skip')}>
             <FastForwardIcon sx={iconStyles} />
           </IconButton>
         </div>
         <div className='controls__settings'>
-          <IconButton>
+          <IconButton onClick={() => setSettingsModalOpen(true)}>
             <SettingsIcon
               sx={{ ...iconStyles, color: COLORS.white, width: 30, height: 30 }}
             />

@@ -12,11 +12,11 @@ const Timeline = () => {
     selectedCamera,
     isPlaying,
     playbackSpeed,
-    currentTimelineTime,
+    currentTime,
     timelineMarkerOffset,
     setCameraSequenceStep,
     setTimelineMarkerOffset,
-    setCurrentTimelineTime,
+    setCurrentTime,
   } = useMediaPlayerContext();
 
   const handleUpdateSequenceStep = () => {
@@ -38,7 +38,7 @@ const Timeline = () => {
 
     const interval = setInterval(() => {
       setTimelineMarkerOffset((prevState) => prevState - 1);
-      setCurrentTimelineTime((prevState) => addSeconds(prevState, 72));
+      setCurrentTime((prevState) => addSeconds(prevState, 72));
     }, 50 / playbackSpeed);
 
     if (!isPlaying) clearInterval(interval);
@@ -64,9 +64,7 @@ const Timeline = () => {
             </div>
           ))}
       </div>
-      <div className='timeline__time'>
-        {format(currentTimelineTime, 'HH:mm:ss')}
-      </div>
+      <div className='timeline__time'>{format(currentTime, 'HH:mm:ss')}</div>
       <div className='timeline__pointer'></div>
     </div>
   );

@@ -4,7 +4,7 @@
 
 .media-player__video {
   width: 100%;
-  height: calc(100% - 78px - 96px);
+  height: calc(100% - 94px - 96px);
   padding: 4px;
 }
 
@@ -18,6 +18,7 @@
   display: flex;
   justify-content: space-between;
   padding: 12px 24px 0 24px;
+  margin-bottom: 16px;
 }
 
 .controls__volume {
@@ -25,4 +26,18 @@
   display: flex;
   align-items: center;
   gap: 12px;
+}
+
+.controls__controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.loader {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

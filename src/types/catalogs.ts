@@ -5,6 +5,7 @@ export interface Camera {
     url: string;
     time: string;
   }[];
+  sequence: SequenceStepStype[];
 }
 
 export interface Folder {
@@ -16,3 +17,10 @@ export interface Catalog {
   name: string;
   folders: Folder[];
 }
+
+export type SequenceStepStype =
+  | 'skip'
+  | 'rewind'
+  | 'play'
+  | 'pause'
+  | 'timeline';
