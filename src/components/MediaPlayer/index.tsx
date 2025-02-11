@@ -6,7 +6,6 @@ import {
   Slider,
   Typography,
 } from '@mui/material';
-import unavailable from '../../assets/images/unavailable.png';
 
 import './styles.css';
 
@@ -45,10 +44,12 @@ const MediaPlayer = () => {
     shouldAutoplay,
     shouldLoad,
     shouldShowVideoName,
+    setCatalogsData,
     setPlaybackSpeed,
     setIsPlaying,
     setCameraSequenceStep,
     setSettingsModalOpen,
+    setSelectedCamera,
   } = useMediaPlayerContext();
 
   const [volume, setVolume] = useState(35);
@@ -78,18 +79,33 @@ const MediaPlayer = () => {
 
     const newStep = cameraSequenceStep + 1;
 
-    if (control === 'play' && isPlaying === false) {
-      setIsPlaying(true);
-      return;
-    }
+    console.log({
+      newStep,
+      videos: selectedCamera.videos.length,
+      selectedCamera,
+    });
 
-    if (
-      selectedCamera.sequence[cameraSequenceStep] === control &&
-      newStep < selectedCamera.videos.length
-    ) {
-      setCameraSequenceStep(newStep);
-    } else if (control !== 'pause') {
-      setIsPlaying(true);
+    if (newStep < selectedCamera.videos.length) {
+      if (control === 'play' && isPlaying === false) {
+        setIsPlaying(true);
+        return;
+      }
+
+      if (
+        selectedCamera.sequence[cameraSequenceStep] === control &&
+        newStep < selectedCamera.videos.length
+      ) {
+        setCameraSequenceStep(newStep);
+      } else if (control !== 'pause') {
+        setIsPlaying(true);
+      }
+    } else if (selectedCamera?.onSequenceEnd === 'disable-camera') {
+      setCatalogsData((prevState) => {
+        const newState = [...prevState];
+        newState[0].folders[12].cameras[0].disabled = true;
+        return newState;
+      });
+      setSelectedCamera(null);
     }
   };
 
@@ -101,13 +117,20 @@ const MediaPlayer = () => {
     const newStep = cameraSequenceStep + 1;
     if (newStep < selectedCamera.videos.length) {
       setCameraSequenceStep(newStep);
+    } else if (selectedCamera?.onSequenceEnd === 'disable-camera') {
+      setCatalogsData((prevState) => {
+        const newState = [...prevState];
+        newState[0].folders[12].cameras[0].disabled = true;
+        return newState;
+      });
+      setSelectedCamera(null);
     }
   };
 
   useEffect(() => {
-    if (!videoUrl) return;
+    if (!videoUrl || !selectedCamera) return;
 
-    if (shouldAutoplay) {
+    if (shouldAutoplay || !selectedCamera?.sequence.length) {
       setIsPlaying(true);
     }
 
@@ -125,6 +148,8 @@ const MediaPlayer = () => {
             <div className='loader'>
               <CircularProgress size={120} />
             </div>
+          ) : selectedCamera?.videos[cameraSequenceStep].type === 'image' ? (
+            <img src={videoUrl} />
           ) : (
             <ReactPlayer
               url={videoUrl}
@@ -137,8 +162,6 @@ const MediaPlayer = () => {
               onEnded={handleVideoEnded}
             />
           )
-        ) : selectedCamera?.disabled ? (
-          <img src={unavailable} />
         ) : null}
         {shouldShowVideoName && (
           <div className='current-video-name'>{videoUrl}</div>

@@ -27,48 +27,51 @@ const SettingsModal = () => {
   if (!modalWrapper || !settingsModalOpen) return null;
 
   return createPortal(
-    <div className='modal__wrapper'>
-      <div className='modal__close'>
-        <IconButton onClick={handleCloseModal}>
-          <CloseIcon />
-        </IconButton>
+    <>
+      <div className='modal__overlay' onClick={handleCloseModal}></div>
+      <div className='modal__wrapper'>
+        <div className='modal__close'>
+          <IconButton onClick={handleCloseModal}>
+            <CloseIcon />
+          </IconButton>
+        </div>
+        <div className='modal__options'>
+          <FormControlLabel
+            label='Autoplay video po wybraniu kamery'
+            control={
+              <Checkbox
+                checked={shouldAutoplay}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                  setShouldAutoplay(e.target.checked);
+                }}
+              />
+            }
+          />
+          <FormControlLabel
+            label='Ładowanie video z kamery'
+            control={
+              <Checkbox
+                checked={shouldLoad}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                  setShouldLoad(e.target.checked);
+                }}
+              />
+            }
+          />
+          <FormControlLabel
+            label='Pokaż nazwę aktualnego video'
+            control={
+              <Checkbox
+                checked={shouldShowVideoName}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                  setShouldShowVideoName(e.target.checked);
+                }}
+              />
+            }
+          />
+        </div>
       </div>
-      <div className='modal__options'>
-        <FormControlLabel
-          label='Autoplay video po wybraniu kamery'
-          control={
-            <Checkbox
-              checked={shouldAutoplay}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                setShouldAutoplay(e.target.checked);
-              }}
-            />
-          }
-        />
-        <FormControlLabel
-          label='Ładowanie video z kamery'
-          control={
-            <Checkbox
-              checked={shouldLoad}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                setShouldLoad(e.target.checked);
-              }}
-            />
-          }
-        />
-        <FormControlLabel
-          label='Pokaż nazwę aktualnego video'
-          control={
-            <Checkbox
-              checked={shouldShowVideoName}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                setShouldShowVideoName(e.target.checked);
-              }}
-            />
-          }
-        />
-      </div>
-    </div>,
+    </>,
     modalWrapper
   );
 };

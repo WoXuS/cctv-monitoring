@@ -4,34 +4,21 @@ import VideocamOffIcon from '@mui/icons-material/VideocamOff';
 import './styles.css';
 import { COLORS } from '../../utils/colors';
 import { useMediaPlayerContext } from '../../contexts/mediaPlayerContext';
-import { catalogsData } from '../../utils/data';
-import { Camera, Catalog, Folder } from '../../types/catalogs';
+import { Camera } from '../../types/catalogs';
 import { setHours, setMinutes, setSeconds } from 'date-fns';
-import { useState } from 'react';
 
 const Catalogs = () => {
   const {
-    folders,
-    cameras,
+    selectedCatalog,
+    selectedFolder,
     selectedCamera,
-    setFolders,
-    setCameras,
+    catalogsData,
+    setSelectedCatalog,
+    setSelectedFolder,
     setSelectedCamera,
     setCameraSequenceStep,
     setCurrentTime,
   } = useMediaPlayerContext();
-  const [selectedCatalog, setSelectedCatalog] = useState<Catalog | null>(null);
-  const [selectedFolder, setSelectedFolder] = useState<Folder | null>(null);
-
-  const handleCatalogClick = (catalog: Catalog) => {
-    setSelectedCatalog(catalog);
-    setFolders(catalog.folders);
-  };
-
-  const handleFolderClick = (folder: Folder) => {
-    setSelectedFolder(folder);
-    setCameras(folder.cameras);
-  };
 
   const handleCameraClick = (camera: Camera) => {
     setCameraSequenceStep(0);
@@ -56,7 +43,7 @@ const Catalogs = () => {
                   ? '--selected '
                   : ''
               }section__row`}
-              onClick={() => handleCatalogClick(catalog)}
+              onClick={() => setSelectedCatalog(catalog)}
             >
               <FolderIcon sx={{ color: COLORS.blue }} />
               <p>{catalog.name}</p>
@@ -67,7 +54,7 @@ const Catalogs = () => {
       <div className='catalogs__folders'>
         <p className='section__header'>FOLDERY:</p>
         <div className='section__wrapper'>
-          {folders.map((folder, index) => (
+          {selectedCatalog?.folders.map((folder, index) => (
             <div
               key={folder.name}
               className={`${
@@ -75,7 +62,7 @@ const Catalogs = () => {
                   ? '--selected '
                   : ''
               }section__row`}
-              onClick={() => handleFolderClick(folder)}
+              onClick={() => setSelectedFolder(folder)}
             >
               <FolderIcon sx={{ color: COLORS.blue }} />
               <p>{`${index < 9 ? `0${index + 1}` : index + 1}_${
@@ -88,11 +75,15 @@ const Catalogs = () => {
       <div className='catalogs__cameras'>
         <p className='section__header'>KAMERY:</p>
         <div className='section__wrapper'>
-          {cameras.map((camera) => (
+          {selectedFolder?.cameras.map((camera) => (
             <div
               key={camera.name}
               className={`${
-                camera.name === selectedCamera?.name ? '--selected ' : ''
+                camera.disabled
+                  ? '--disabled '
+                  : camera.name === selectedCamera?.name
+                  ? '--selected '
+                  : ''
               }section__row`}
               onClick={() => handleCameraClick(camera)}
             >

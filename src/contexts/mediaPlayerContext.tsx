@@ -7,15 +7,18 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { Camera, Folder } from '../types/catalogs';
+import { Camera, Catalog, Folder } from '../types/catalogs';
 import { startOfToday } from 'date-fns';
 import { DEFAULT_DATE, DEFAULT_MONTH, DEFAULT_YEAR } from '../utils/defaults';
+import { catalogsData as initialCatalogsData } from '../utils/data';
 
 interface MediaPlayerContextProps {
-  folders: Folder[];
-  setFolders: Dispatch<SetStateAction<Folder[]>>;
-  cameras: Camera[];
-  setCameras: Dispatch<SetStateAction<Camera[]>>;
+  catalogsData: Catalog[];
+  setCatalogsData: Dispatch<SetStateAction<Catalog[]>>;
+  selectedCatalog: Catalog | null;
+  setSelectedCatalog: Dispatch<SetStateAction<Catalog | null>>;
+  selectedFolder: Folder | null;
+  setSelectedFolder: Dispatch<SetStateAction<Folder | null>>;
   selectedCamera: Camera | null;
   setSelectedCamera: Dispatch<SetStateAction<Camera | null>>;
   currentDay: Date;
@@ -51,10 +54,12 @@ interface MediaPlayerContextProviderProps {
 }
 
 export const MediaPlayerContext = createContext<MediaPlayerContextProps>({
-  folders: [],
-  setFolders: () => {},
-  cameras: [],
-  setCameras: () => {},
+  catalogsData: initialCatalogsData,
+  setCatalogsData: () => {},
+  selectedCatalog: null,
+  setSelectedCatalog: () => {},
+  selectedFolder: null,
+  setSelectedFolder: () => {},
   selectedCamera: null,
   setSelectedCamera: () => {},
   currentDay: new Date(),
@@ -88,11 +93,12 @@ export const MediaPlayerContext = createContext<MediaPlayerContextProps>({
 export const MediaPlayerContextProvider = ({
   children,
 }: MediaPlayerContextProviderProps) => {
+  const [catalogsData, setCatalogsData] = useState(initialCatalogsData);
   const [currentDay, setCurrentDay] = useState<Date>(DEFAULT_DATE);
   const [currentMonth, setCurrentMonth] = useState<number>(DEFAULT_MONTH);
   const [currentYear, setCurrentYear] = useState<number>(DEFAULT_YEAR);
-  const [folders, setFolders] = useState<Folder[]>([]);
-  const [cameras, setCameras] = useState<Camera[]>([]);
+  const [selectedCatalog, setSelectedCatalog] = useState<Catalog | null>(null);
+  const [selectedFolder, setSelectedFolder] = useState<Folder | null>(null);
   const [selectedCamera, setSelectedCamera] = useState<Camera | null>(null);
   const [cameraSequenceStep, setCameraSequenceStep] = useState<number>(0);
   const [timelineMarkerOffset, setTimelineMarkerOffset] = useState<number>(12);
@@ -111,8 +117,8 @@ export const MediaPlayerContextProvider = ({
   }, [selectedCamera, cameraSequenceStep]);
 
   const handleResetAppState = () => {
-    setFolders([]);
-    setCameras([]);
+    setSelectedCatalog(null);
+    setSelectedFolder(null);
     setSelectedCamera(null);
     setCurrentDay(DEFAULT_DATE);
     setCurrentMonth(DEFAULT_MONTH);
@@ -128,12 +134,14 @@ export const MediaPlayerContextProvider = ({
   return (
     <MediaPlayerContext.Provider
       value={{
-        folders,
-        setFolders,
-        cameras,
+        catalogsData,
+        setCatalogsData,
+        selectedCatalog,
+        setSelectedCatalog,
+        selectedFolder,
+        setSelectedFolder,
         selectedCamera,
         setSelectedCamera,
-        setCameras,
         currentDay,
         setCurrentDay,
         currentMonth,

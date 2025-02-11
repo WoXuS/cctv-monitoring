@@ -31,18 +31,19 @@ export const catalogsData: Catalog[] = [
             name: 'CAM_059',
             videos: [],
             sequence: [],
+            disabled: false,
           },
-          { name: 'CAM_060', videos: [], sequence: [] },
-          { name: 'CAM_061', videos: [], sequence: [] },
-          { name: 'CAM_062', videos: [], sequence: [] },
+          { name: 'CAM_060', videos: [], sequence: [], disabled: false },
+          { name: 'CAM_061', videos: [], sequence: [], disabled: false },
+          { name: 'CAM_062', videos: [], sequence: [], disabled: false },
         ],
       },
       {
         name: 'Krakowska',
         cameras: [
-          { name: 'CAM_055', videos: [], sequence: [] },
-          { name: 'CAM_056', videos: [], sequence: [] },
-          { name: 'CAM_057', videos: [], sequence: [] },
+          { name: 'CAM_055', videos: [], sequence: [], disabled: false },
+          { name: 'CAM_056', videos: [], sequence: [], disabled: false },
+          { name: 'CAM_057', videos: [], sequence: [], disabled: false },
         ],
       },
       {
@@ -52,9 +53,9 @@ export const catalogsData: Catalog[] = [
       {
         name: 'Szkolna',
         cameras: [
-          { name: 'CAM_020', videos: [], sequence: [] },
-          { name: 'CAM_021', videos: [], sequence: [] },
-          { name: 'CAM_023', videos: [], sequence: [] },
+          { name: 'CAM_020', videos: [], sequence: [], disabled: false },
+          { name: 'CAM_021', videos: [], sequence: [], disabled: false },
+          { name: 'CAM_023', videos: [], sequence: [], disabled: false },
           {
             name: 'CAM_024',
             videos: [
@@ -64,25 +65,37 @@ export const catalogsData: Catalog[] = [
               },
             ],
             sequence: [],
+            disabled: false,
           },
         ],
       },
       {
         name: 'Chopina',
         cameras: [
-          { name: 'CAM_025', videos: [], sequence: [] },
-          { name: 'CAM_026', videos: [], sequence: [] },
           {
-            name: 'CAM_027',
+            name: 'CAM_025',
             videos: [
               {
-                url: '/videos/39-40.mp4',
+                url: '/videos/40.mp4',
                 time: '02:06:18',
               },
             ],
             sequence: [],
+            disabled: false,
           },
-          { name: 'CAM_028', videos: [], sequence: [] },
+          { name: 'CAM_026', videos: [], sequence: [], disabled: false },
+          {
+            name: 'CAM_027',
+            videos: [
+              {
+                url: '/videos/39.mp4',
+                time: '02:06:18',
+              },
+            ],
+            sequence: [],
+            disabled: false,
+          },
+          { name: 'CAM_028', videos: [], sequence: [], disabled: false },
         ],
       },
       {
@@ -108,12 +121,22 @@ export const catalogsData: Catalog[] = [
                 time: '01:50:06',
               },
               {
+                type: 'image',
+                url: '/images/unavailable.png',
+                time: '01:50:06',
+              },
+              {
+                url: '/videos/22.mp4',
+                time: '01:52:20',
+              },
+              {
                 url: '/videos/28.mp4',
                 time: '01:52:20',
               },
             ],
-            sequence: [],
-            disabled: true,
+            sequence: ['skip', 'play', 'rewind', 'play'],
+            onSequenceEnd: 'disable-camera',
+            disabled: false,
           },
           {
             name: 'CAM_041',
@@ -140,6 +163,7 @@ export const catalogsData: Catalog[] = [
               },
             ],
             sequence: ['pause', 'play', 'rewind'],
+            disabled: false,
           },
           {
             name: 'CAM_042',
@@ -150,6 +174,7 @@ export const catalogsData: Catalog[] = [
               },
             ],
             sequence: [],
+            disabled: false,
           },
           {
             name: 'CAM_044',
@@ -160,6 +185,7 @@ export const catalogsData: Catalog[] = [
               },
             ],
             sequence: [],
+            disabled: false,
           },
           {
             name: 'CAM_045',
@@ -170,6 +196,7 @@ export const catalogsData: Catalog[] = [
               },
             ],
             sequence: [],
+            disabled: false,
           },
         ],
       },

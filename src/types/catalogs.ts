@@ -1,11 +1,13 @@
 export interface Camera {
   name: string;
-  disabled?: boolean;
+  disabled: boolean;
   videos: {
+    type?: string;
     url: string;
     time: string;
   }[];
   sequence: SequenceStepStype[];
+  onSequenceEnd?: string;
 }
 
 export interface Folder {

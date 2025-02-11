@@ -40,7 +40,6 @@
   gap: 6px;
   color: var(--white);
   text-transform: uppercase;
-  cursor: pointer;
   padding: 4px 6px;
   user-select: none;
 }
@@ -49,9 +48,15 @@
 .section__row:hover {
   background-color: var(--blue);
   color: var(--black);
+  cursor: pointer;
 }
 
 .--selected > svg > path,
 .section__row:hover > svg > path {
   fill: var(--light-blue);
+}
+
+.--disabled {
+  color: var(--light-gray);
+  pointer-events: none;
 }
