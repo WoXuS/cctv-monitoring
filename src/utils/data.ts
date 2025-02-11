@@ -2,7 +2,7 @@ import { Catalog } from '../types/catalogs';
 
 export const catalogsData: Catalog[] = [
   {
-    name: 'Centrum',
+    name: 'REJON_CENTRUM',
     folders: [
       {
         name: 'Dworzec',
@@ -17,24 +17,28 @@ export const catalogsData: Catalog[] = [
         cameras: [],
       },
       {
-        name: 'Galeria handlowa',
+        name: 'Rynek',
         cameras: [],
       },
       {
-        name: 'Chopina',
+        name: 'Waliców',
         cameras: [],
+      },
+      {
+        name: 'Browarnia',
+        cameras: [
+          { name: 'CAM_059', videos: [] },
+          { name: 'CAM_060', videos: [] },
+          { name: 'CAM_061', videos: [] },
+          { name: 'CAM_062', videos: [] },
+        ],
       },
       {
         name: 'Krakowska',
-        cameras: [],
-      },
-      {
-        name: 'Rynek',
         cameras: [
-          { name: 'CAM_01', videos: ['4', '6', '8', '10'] },
-          { name: 'CAM_02', videos: ['6'] },
-          { name: 'CAM_03', videos: ['8'] },
-          { name: 'CAM_04', videos: ['10'] },
+          { name: 'CAM_055', videos: ['4', '6', '8', '10'] },
+          { name: 'CAM_056', videos: ['6'] },
+          { name: 'CAM_057', videos: ['8'] },
         ],
       },
       {
@@ -44,17 +48,20 @@ export const catalogsData: Catalog[] = [
       {
         name: 'Szkolna',
         cameras: [
-          { name: 'CAM_01', videos: [] },
-          { name: 'CAM_03', videos: [] },
-          {
-            name: 'CAM_04',
-            videos: [],
-          },
+          { name: 'CAM_020', videos: [] },
+          { name: 'CAM_021', videos: [] },
+          { name: 'CAM_023', videos: [] },
+          { name: 'CAM_024', videos: [] },
         ],
       },
       {
-        name: 'Waliców',
-        cameras: [],
+        name: 'Chopina',
+        cameras: [
+          { name: 'CAM_025', videos: [] },
+          { name: 'CAM_026', videos: [] },
+          { name: 'CAM_027', videos: [] },
+          { name: 'CAM_028', videos: [] },
+        ],
       },
       {
         name: 'Stacja',
@@ -62,23 +69,16 @@ export const catalogsData: Catalog[] = [
       },
       {
         name: 'Park',
-        cameras: [
-          { name: 'CAM_01', videos: [] },
-          { name: 'CAM_02', videos: [] },
-          {
-            name: 'CAM_03',
-            disabled: true,
-            videos: [],
-          },
-        ],
+        cameras: [],
       },
       {
         name: 'Rondo',
         cameras: [
-          { name: 'CAM_01', videos: [] },
-          { name: 'CAM_02', videos: [] },
-          { name: 'CAM_03', videos: [] },
-          { name: 'CAM_04', videos: [] },
+          { name: 'CAM_039', videos: [], disabled: true },
+          { name: 'CAM_041', videos: [] },
+          { name: 'CAM_042', videos: [] },
+          { name: 'CAM_044', videos: [] },
+          { name: 'CAM_045', videos: [] },
         ],
       },
       {
@@ -86,14 +86,14 @@ export const catalogsData: Catalog[] = [
         cameras: [],
       },
       {
-        name: 'DRR_S4',
+        name: 'DSR_S4',
         cameras: [],
       },
     ],
   },
-  { name: 'Kolonia', folders: [] },
-  { name: 'Zalesie', folders: [] },
-  { name: 'Zatorze', folders: [] },
+  { name: 'REJON_KOLONIA', folders: [] },
+  { name: 'REJON_ZALESIE', folders: [] },
+  { name: 'REJON_ZATORZE', folders: [] },
 ];
 
 export const timelineLabels = [

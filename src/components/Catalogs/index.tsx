@@ -49,7 +49,9 @@ const Catalogs = () => {
               onClick={() => setCameras(folder.cameras)}
             >
               <FolderIcon sx={{ color: COLORS.blue }} />
-              <p>{`${index < 10 ? `0${index}` : index}_${folder.name}`}</p>
+              <p>{`${index < 9 ? `0${index + 1}` : index + 1}_${
+                folder.name
+              }`}</p>
             </div>
           ))}
         </div>
