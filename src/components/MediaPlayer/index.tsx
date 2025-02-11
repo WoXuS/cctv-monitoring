@@ -1,5 +1,5 @@
 import ReactPlayer from 'react-player';
-import { useState } from 'react';
+// import { useState } from 'react';
 import { IconButton, Slider, Typography } from '@mui/material';
 import unavailable from '../../assets/images/unavailable.png';
 
@@ -34,11 +34,11 @@ const MediaPlayer = () => {
     setIsPlaying,
   } = useMediaPlayerContext();
 
-  const [volume, setVolume] = useState(35);
+  // const [volume, setVolume] = useState(35);
 
-  const handleUpdateVolume = (event: Event, newValue: number | number[]) => {
-    setVolume(newValue as number);
-  };
+  // const handleUpdateVolume = (event: Event, newValue: number | number[]) => {
+  //   setVolume(newValue as number);
+  // };
 
   const handleUpdatePlaybackSpeed = () => {
     const newStep = playbackSpeed === 3 ? 1 : playbackSpeed + 1;
@@ -68,8 +68,8 @@ const MediaPlayer = () => {
         <div className='controls__volume'>
           <VolumeUp sx={{ ...iconStyles, width: 30, height: 30 }} />
           <Slider
-            value={volume}
-            onChange={handleUpdateVolume}
+            value={35}
+            // onChange={handleUpdateVolume}
             sx={{
               color: COLORS.lightGray,
               '.MuiSlider-thumb': { color: COLORS.white },
