@@ -1,7 +1,10 @@
 export interface Camera {
   name: string;
   disabled?: boolean;
-  videos: string[];
+  videos: {
+    url: string;
+    time: string;
+  }[];
 }
 
 export interface Folder {

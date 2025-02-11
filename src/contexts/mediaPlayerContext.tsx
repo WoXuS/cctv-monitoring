@@ -72,11 +72,9 @@ export const MediaPlayerContextProvider = ({
   children,
 }: MediaPlayerContextProviderProps) => {
   const today = new Date();
-  const [currentDay, setCurrentDay] = useState<Date>(today);
-  const [currentMonth, setCurrentMonth] = useState<number>(
-    today.getMonth() + 1
-  );
-  const [currentYear, setCurrentYear] = useState<number>(today.getFullYear());
+  const [currentDay, setCurrentDay] = useState<Date>(new Date('2022-09-17'));
+  const [currentMonth, setCurrentMonth] = useState<number>(9);
+  const [currentYear, setCurrentYear] = useState<number>(2022);
   const [folders, setFolders] = useState<Folder[]>([]);
   const [cameras, setCameras] = useState<Camera[]>([]);
   const [selectedCamera, setSelectedCamera] = useState<Camera | null>(null);
