@@ -37,6 +37,7 @@
   background-color: var(--blue);
   bottom: 0;
   left: 50%;
+  cursor: pointer;
 }
 
 .line__marker {

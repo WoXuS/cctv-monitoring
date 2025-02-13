@@ -1,4 +1,10 @@
-import { addMilliseconds, format } from 'date-fns';
+import {
+  addMilliseconds,
+  differenceInMinutes,
+  format,
+  startOfDay,
+  subHours,
+} from 'date-fns';
 import { useMediaPlayerContext } from '../../contexts/mediaPlayerContext';
 import { timelineLabels } from '../../utils/data';
 import { useEffect } from 'react';
@@ -23,7 +29,7 @@ const Timeline = ({ timeRatio }: TimelineProps) => {
     setCameraSequenceStep,
   } = useMediaPlayerContext();
 
-  const handleUpdateSequenceStep = () => {
+  const handleTimelineClick = () => {
     const newStep = cameraSequenceStep + 1;
 
     if (
@@ -50,8 +56,17 @@ const Timeline = ({ timeRatio }: TimelineProps) => {
     return () => clearInterval(interval);
   }, [isPlaying, currentVideo, playbackSpeed, cameraSequenceStep]);
 
+  useEffect(() => {
+    const timeDiff = differenceInMinutes(
+      subHours(startOfDay(currentTime), 10),
+      currentTime
+    );
+
+    setTimelineMarkerOffset(612 + timeDiff);
+  }, [currentTime]);
+
   return (
-    <div className='media-player__timeline' onClick={handleUpdateSequenceStep}>
+    <div className='media-player__timeline' onClick={handleTimelineClick}>
       <div
         className={`timeline__line${
           selectedCamera?.disabled ? ' line--disabled' : ''
@@ -67,7 +82,7 @@ const Timeline = ({ timeRatio }: TimelineProps) => {
                 selectedCamera?.disabled ? ' marker--disabled' : ''
               }`}
               style={{
-                left: `${timelineMarkerOffset + index * 100}px`,
+                left: `${timelineMarkerOffset + index * 120}px`,
               }}
             >
               {marker}

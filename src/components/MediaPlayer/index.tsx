@@ -22,12 +22,8 @@ import { COLORS } from '../../utils/colors';
 import { useMediaPlayerContext } from '../../contexts/mediaPlayerContext';
 import Timeline from '../Timeline';
 import { SequenceStepStype } from '../../types/catalogs';
-import {
-  differenceInSeconds,
-  setHours,
-  setMinutes,
-  setSeconds,
-} from 'date-fns';
+import { differenceInSeconds } from 'date-fns';
+import { getTimeDate } from '../../utils/date';
 
 const iconStyles = {
   color: COLORS.lightGray,
@@ -132,23 +128,18 @@ const MediaPlayer = () => {
   };
 
   const handleSetTimeline = (videoDuration: number) => {
-    if (!selectedCamera || !selectedCamera.videos[cameraSequenceStep].endTime)
+    if (!selectedCamera) {
       return;
+    }
 
-    const [startHours, startMinutes, startSeconds] =
-      selectedCamera.videos[cameraSequenceStep].startTime.split(':');
-    const [endHours, endMinutes, endSeconds] =
-      selectedCamera.videos[cameraSequenceStep].endTime.split(':');
+    const video = selectedCamera.videos[cameraSequenceStep];
 
-    const startTime = setHours(
-      setMinutes(setSeconds(currentDay, +startSeconds), +startMinutes),
-      +startHours
-    );
-    const endTime = setHours(
-      setMinutes(setSeconds(currentDay, +endSeconds), +endMinutes),
-      +endHours
-    );
+    if (!video.endTime) {
+      return;
+    }
 
+    const startTime = getTimeDate(currentDay, video.startTime);
+    const endTime = getTimeDate(currentDay, video.endTime);
     const diff = differenceInSeconds(endTime, startTime);
     const ratio = diff / Math.floor(videoDuration);
 

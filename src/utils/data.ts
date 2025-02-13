@@ -320,6 +320,10 @@ export const catalogsData: Catalog[] = [
                 url: '/videos/8.mp4',
                 startTime: '01:34:02',
                 endTime: '01:48:37',
+                rewinded: {
+                  start: '01:34:09',
+                  end: '01:48:37',
+                },
               },
               {
                 url: '/videos/10.mp4',
@@ -394,7 +398,6 @@ export const catalogsData: Catalog[] = [
 ];
 
 export const timelineLabels = [
-  '12:00',
   '14:00',
   '16:00',
   '18:00',
@@ -406,4 +409,5 @@ export const timelineLabels = [
   '06:00',
   '08:00',
   '10:00',
+  '12:00',
 ];

@@ -8,7 +8,7 @@ import {
   useState,
 } from 'react';
 import { Camera, Catalog, Folder, Video } from '../types/catalogs';
-import { startOfToday } from 'date-fns';
+import { startOfDay, startOfToday } from 'date-fns';
 import { DEFAULT_DATE, DEFAULT_MONTH, DEFAULT_YEAR } from '../utils/defaults';
 import { catalogsData as initialCatalogsData } from '../utils/data';
 
@@ -98,7 +98,9 @@ export const MediaPlayerContextProvider = ({
   const [selectedCamera, setSelectedCamera] = useState<Camera | null>(null);
   const [cameraSequenceStep, setCameraSequenceStep] = useState<number>(0);
   const [timelineMarkerOffset, setTimelineMarkerOffset] = useState<number>(12);
-  const [currentTime, setCurrentTime] = useState<Date>(startOfToday());
+  const [currentTime, setCurrentTime] = useState<Date>(
+    startOfDay(DEFAULT_DATE)
+  );
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [playbackSpeed, setPlaybackSpeed] = useState<number>(1);
   const [settingsModalOpen, setSettingsModalOpen] = useState(false);
@@ -119,10 +121,9 @@ export const MediaPlayerContextProvider = ({
     setCurrentDay(DEFAULT_DATE);
     setCurrentMonth(DEFAULT_MONTH);
     setCurrentYear(DEFAULT_YEAR);
-    setCurrentTime(startOfToday());
+    setCurrentTime(startOfDay(DEFAULT_DATE));
     setCameraSequenceStep(0);
     setTimelineMarkerOffset(12);
-    setCurrentTime(startOfToday());
     setIsPlaying(false);
     setPlaybackSpeed(1);
   };

@@ -5,6 +5,10 @@ export interface Video {
   endTime?: string;
   isRewinded?: boolean;
   isFastforwared?: boolean;
+  rewinded?: {
+    start: string;
+    end: string;
+  };
 }
 
 export interface Camera {
