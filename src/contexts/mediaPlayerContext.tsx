@@ -42,8 +42,6 @@ interface MediaPlayerContextProps {
   setSettingsModalOpen: Dispatch<SetStateAction<boolean>>;
   shouldAutoplay: boolean;
   setShouldAutoplay: Dispatch<SetStateAction<boolean>>;
-  shouldLoad: boolean;
-  setShouldLoad: Dispatch<SetStateAction<boolean>>;
   shouldShowVideoName: boolean;
   setShouldShowVideoName: Dispatch<SetStateAction<boolean>>;
   handleResetAppState: () => void;
@@ -83,8 +81,6 @@ export const MediaPlayerContext = createContext<MediaPlayerContextProps>({
   setSettingsModalOpen: () => {},
   shouldAutoplay: false,
   setShouldAutoplay: () => {},
-  shouldLoad: false,
-  setShouldLoad: () => {},
   shouldShowVideoName: false,
   setShouldShowVideoName: () => {},
   handleResetAppState: () => {},
@@ -107,7 +103,6 @@ export const MediaPlayerContextProvider = ({
   const [playbackSpeed, setPlaybackSpeed] = useState<number>(1);
   const [settingsModalOpen, setSettingsModalOpen] = useState(false);
   const [shouldAutoplay, setShouldAutoplay] = useState(false);
-  const [shouldLoad, setShouldLoad] = useState(false);
   const [shouldShowVideoName, setShouldShowVideoName] = useState(false);
 
   const currentVideo = useMemo(() => {
@@ -164,8 +159,6 @@ export const MediaPlayerContextProvider = ({
         setSettingsModalOpen,
         shouldAutoplay,
         setShouldAutoplay,
-        shouldLoad,
-        setShouldLoad,
         shouldShowVideoName,
         setShouldShowVideoName,
         handleResetAppState,

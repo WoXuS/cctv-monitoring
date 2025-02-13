@@ -6,6 +6,7 @@
   width: 100%;
   height: calc(100% - 94px - 96px);
   padding: 4px;
+  position: relative;
 }
 
 .media-player__video > img {
@@ -35,8 +36,11 @@
 }
 
 .loader {
-  height: 100%;
-  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   display: flex;
   align-items: center;
   justify-content: center;

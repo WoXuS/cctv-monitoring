@@ -48,7 +48,6 @@ const MediaPlayer = () => {
     isPlaying,
     cameraSequenceStep,
     shouldAutoplay,
-    shouldLoad,
     shouldShowVideoName,
     currentDay,
     setCurrentTime,
@@ -157,19 +156,19 @@ const MediaPlayer = () => {
     setCurrentTime(startTime);
   };
 
-  useEffect(() => {
-    if (!currentVideo || !selectedCamera) return;
-
+  const handleVideoReady = () => {
+    setIsLoading(false);
     setIsPlaying(false);
 
     if (shouldAutoplay || !selectedCamera?.sequence.length) {
       setIsPlaying(true);
     }
+  };
 
-    if (shouldLoad) {
-      setIsLoading(true);
-      setTimeout(() => setIsLoading(false), 500);
-    }
+  useEffect(() => {
+    if (!currentVideo) return;
+
+    setIsLoading(true);
   }, [currentVideo]);
 
   useEffect(() => {
@@ -186,24 +185,29 @@ const MediaPlayer = () => {
             <img src='/images/ERROR_MEMORY_CORRUPTED.jpg' />
           </div>
         ) : currentVideo ? (
-          isLoading ? (
-            <div className='loader'>
-              <CircularProgress size={120} />
-            </div>
-          ) : selectedCamera?.videos[cameraSequenceStep].type === 'image' ? (
+          selectedCamera?.videos[cameraSequenceStep].type === 'image' ? (
             <img src={currentVideo.url} />
           ) : (
-            <ReactPlayer
-              url={currentVideo.url}
-              height={'100%'}
-              width={'100%'}
-              volume={0}
-              muted
-              playing={isPlaying}
-              playbackRate={playbackSpeed}
-              onEnded={handleVideoEnded}
-              onDuration={handleSetTimeline}
-            />
+            <>
+              <ReactPlayer
+                url={currentVideo.url}
+                height={'100%'}
+                width={'100%'}
+                volume={0}
+                muted
+                playing={isPlaying}
+                playbackRate={playbackSpeed}
+                onEnded={handleVideoEnded}
+                onDuration={handleSetTimeline}
+                onError={(err) => console.log(err)}
+                onReady={handleVideoReady}
+              />
+              {isLoading ? (
+                <div className='loader'>
+                  <CircularProgress size={150} />
+                </div>
+              ) : null}
+            </>
           )
         ) : null}
         {shouldShowVideoName && (

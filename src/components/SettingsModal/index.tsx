@@ -12,10 +12,8 @@ const SettingsModal = () => {
   const {
     settingsModalOpen,
     shouldAutoplay,
-    shouldLoad,
     shouldShowVideoName,
     setShouldAutoplay,
-    setShouldLoad,
     setShouldShowVideoName,
     setSettingsModalOpen,
   } = useMediaPlayerContext();
@@ -43,17 +41,6 @@ const SettingsModal = () => {
                 checked={shouldAutoplay}
                 onChange={(e: ChangeEvent<HTMLInputElement>) => {
                   setShouldAutoplay(e.target.checked);
-                }}
-              />
-            }
-          />
-          <FormControlLabel
-            label='Ładowanie video z kamery'
-            control={
-              <Checkbox
-                checked={shouldLoad}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                  setShouldLoad(e.target.checked);
                 }}
               />
             }
