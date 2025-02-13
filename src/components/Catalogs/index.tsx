@@ -80,12 +80,8 @@ const Catalogs = () => {
             <div
               key={camera.name}
               className={`${
-                camera.disabled
-                  ? '--disabled '
-                  : camera.name === selectedCamera?.name
-                  ? '--selected '
-                  : ''
-              }section__row`}
+                camera.name === selectedCamera?.name ? '--selected ' : ''
+              }${camera.disabled ? '--disabled ' : ''}section__row`}
               onClick={() => handleCameraClick(camera)}
             >
               <p>{camera.name}</p>

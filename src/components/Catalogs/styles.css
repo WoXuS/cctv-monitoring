@@ -56,11 +56,19 @@
   fill: var(--light-blue);
 }
 
+.--selected.--disabled {
+  background-color: var(--gray);
+}
+
 .--disabled,
 .--disabled:hover {
   color: var(--light-gray);
-  background-color: var(--gray);
+
   cursor: not-allowed;
+}
+
+.--disabled > svg > path {
+  fill: red;
 }
 
 .--disabled:hover > svg > path {

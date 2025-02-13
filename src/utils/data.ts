@@ -31,6 +31,7 @@ export const catalogsData: Catalog[] = [
             name: 'CAM_059',
             videos: [
               {
+                type: 'image',
                 url: '/images/63.jpg',
                 startTime: '02:33:15',
               },
@@ -52,6 +53,7 @@ export const catalogsData: Catalog[] = [
             name: 'CAM_057',
             videos: [
               {
+                type: 'image',
                 url: '/images/61.jpg',
                 startTime: '02:28:37',
               },
@@ -72,10 +74,12 @@ export const catalogsData: Catalog[] = [
             name: 'CAM_020',
             videos: [
               {
+                type: 'image',
                 url: '/images/53.jpg',
                 startTime: '10:40:27',
               },
               {
+                type: 'image',
                 url: '/images/55.jpg',
                 startTime: '10:41:29',
               },
@@ -99,6 +103,7 @@ export const catalogsData: Catalog[] = [
                 endTime: '07:54:00',
               },
               {
+                type: 'image',
                 url: '/images/51.jpg',
                 startTime: '16:23:34',
               },
@@ -120,8 +125,9 @@ export const catalogsData: Catalog[] = [
                 startTime: '07:52:07',
                 endTime: '07:52:29',
               },
-              //next seq
+              //to do next seq
               {
+                type: 'image',
                 url: '/images/59.jpg',
                 startTime: '02:13:51',
               },
@@ -206,7 +212,7 @@ export const catalogsData: Catalog[] = [
               },
               {
                 type: 'image',
-                url: '/images/unavailable.png',
+                url: '/images/ERROR_NO_VIDEO.jpg',
                 startTime: '01:50:18',
               },
               {
@@ -216,15 +222,11 @@ export const catalogsData: Catalog[] = [
               },
               {
                 type: 'image',
-                url: '/images/unavailable.png',
+                url: '/images/ERROR_NO_VIDEO.jpg',
                 startTime: '01:50:18',
               },
               {
-                url: '/videos/22.mp4',
-                startTime: '01:52:20',
-              },
-              {
-                url: '/videos/22-28.mp4',
+                url: '/videos/22-25.mp4',
                 startTime: '01:52:20',
               },
               {
@@ -239,11 +241,11 @@ export const catalogsData: Catalog[] = [
               'play',
               'timeline',
               'timeline',
-              'skip',
+              'rewind',
               'skip',
             ],
             onSequenceEnd: 'disable-camera',
-            disabled: false,
+            disabled: true,
           },
           {
             name: 'CAM_041',

@@ -155,6 +155,8 @@ const MediaPlayer = () => {
   useEffect(() => {
     if (!currentVideo || !selectedCamera) return;
 
+    setIsPlaying(false);
+
     if (shouldAutoplay || !selectedCamera?.sequence.length) {
       setIsPlaying(true);
     }
@@ -168,7 +170,11 @@ const MediaPlayer = () => {
   return (
     <div className='media-player__wrapper'>
       <div className='media-player__video'>
-        {currentVideo ? (
+        {selectedCamera?.disabled ? (
+          <div className='camera-disabled'>
+            <img src='/images/ERROR_MEMORY_CORRUPTED.jpg' />
+          </div>
+        ) : currentVideo ? (
           isLoading ? (
             <div className='loader'>
               <CircularProgress size={120} />
@@ -209,7 +215,10 @@ const MediaPlayer = () => {
           <IconButton
             onClick={() => handleSequenceControlClick('rewind')}
             sx={
-              currentVideo && currentVideo?.isRewinded && isPlaying
+              !selectedCamera?.disabled &&
+              currentVideo &&
+              currentVideo?.isRewinded &&
+              isPlaying
                 ? activeButtonStyles
                 : {}
             }
@@ -218,13 +227,18 @@ const MediaPlayer = () => {
           </IconButton>
           <IconButton
             onClick={() => handlePlayPauseClick(false)}
-            sx={currentVideo && !isPlaying ? activeButtonStyles : {}}
+            sx={
+              !selectedCamera?.disabled && currentVideo && !isPlaying
+                ? activeButtonStyles
+                : {}
+            }
           >
             <PauseIcon sx={iconStyles} />
           </IconButton>
           <IconButton
             onClick={() => handlePlayPauseClick(true)}
             sx={
+              !selectedCamera?.disabled &&
               currentVideo &&
               isPlaying &&
               !currentVideo?.isRewinded &&
@@ -259,7 +273,10 @@ const MediaPlayer = () => {
           <IconButton
             onClick={() => handleSequenceControlClick('skip')}
             sx={
-              currentVideo && currentVideo?.isFastforwared && isPlaying
+              !selectedCamera?.disabled &&
+              currentVideo &&
+              currentVideo?.isFastforwared &&
+              isPlaying
                 ? activeButtonStyles
                 : {}
             }
