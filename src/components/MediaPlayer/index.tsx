@@ -42,6 +42,7 @@ const activeButtonStyles = {
 
 const MediaPlayer = () => {
   const {
+    catalogsData,
     currentVideo,
     selectedCamera,
     playbackSpeed,
@@ -154,6 +155,16 @@ const MediaPlayer = () => {
 
   useEffect(() => {
     if (!currentVideo || !selectedCamera) return;
+
+    // fml
+    // setting custom sequences
+
+    if (
+      selectedCamera.name === 'CAM_041' &&
+      catalogsData[0].folders[12].cameras[0].disabled
+    ) {
+      setCameraSequenceStep(4);
+    }
 
     setIsPlaying(false);
 

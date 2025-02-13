@@ -245,7 +245,7 @@ export const catalogsData: Catalog[] = [
               'skip',
             ],
             onSequenceEnd: 'disable-camera',
-            disabled: true,
+            disabled: false,
           },
           {
             name: 'CAM_041',
@@ -271,6 +271,7 @@ export const catalogsData: Catalog[] = [
                 startTime: '01:48:34',
                 endTime: '01:48:29',
               },
+              //other seq
               {
                 url: '/videos/32.mp4',
                 startTime: '01:52:13',
