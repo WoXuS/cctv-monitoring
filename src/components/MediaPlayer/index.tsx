@@ -80,6 +80,11 @@ const MediaPlayer = () => {
 
     const control = play ? 'play' : 'pause';
 
+    if (control === 'play' && isPlaying === false) {
+      setIsPlaying(true);
+      return;
+    }
+
     handleSequenceControlClick(control);
   };
 
