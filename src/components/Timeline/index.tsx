@@ -12,7 +12,7 @@ interface TimelineProps {
 const Timeline = ({ timeRatio }: TimelineProps) => {
   const {
     cameraSequenceStep,
-    videoUrl,
+    currentVideo,
     selectedCamera,
     isPlaying,
     playbackSpeed,
@@ -27,7 +27,7 @@ const Timeline = ({ timeRatio }: TimelineProps) => {
     const newStep = cameraSequenceStep + 1;
 
     if (
-      !videoUrl ||
+      !currentVideo ||
       !selectedCamera ||
       selectedCamera?.videos.length <= newStep
     ) {
@@ -38,7 +38,7 @@ const Timeline = ({ timeRatio }: TimelineProps) => {
   };
 
   useEffect(() => {
-    if (!videoUrl) return;
+    if (!currentVideo) return;
 
     const interval = setInterval(() => {
       setCurrentTime((prevState) => addMilliseconds(prevState, 50 * timeRatio));
@@ -48,18 +48,24 @@ const Timeline = ({ timeRatio }: TimelineProps) => {
     if (!isPlaying) clearInterval(interval);
 
     return () => clearInterval(interval);
-  }, [isPlaying, videoUrl, playbackSpeed, cameraSequenceStep]);
+  }, [isPlaying, currentVideo, playbackSpeed, cameraSequenceStep]);
 
   return (
     <div className='media-player__timeline' onClick={handleUpdateSequenceStep}>
-      <div className='timeline__line'>
+      <div
+        className={`timeline__line${
+          selectedCamera?.disabled ? ' line--disabled' : ''
+        }`}
+      >
         {Array(10)
           .fill(timelineLabels)
           .flat()
           .map((marker, index) => (
             <div
               key={marker + index}
-              className='line__marker'
+              className={`line__marker${
+                selectedCamera?.disabled ? ' marker--disabled' : ''
+              }`}
               style={{
                 left: `${timelineMarkerOffset + index * 100}px`,
               }}

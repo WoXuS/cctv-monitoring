@@ -56,7 +56,13 @@
   fill: var(--light-blue);
 }
 
-.--disabled {
+.--disabled,
+.--disabled:hover {
   color: var(--light-gray);
-  pointer-events: none;
+  background-color: var(--gray);
+  cursor: not-allowed;
+}
+
+.--disabled:hover > svg > path {
+  fill: inherit;
 }

@@ -42,7 +42,7 @@ const activeButtonStyles = {
 
 const MediaPlayer = () => {
   const {
-    videoUrl,
+    currentVideo,
     selectedCamera,
     playbackSpeed,
     isPlaying,
@@ -57,7 +57,6 @@ const MediaPlayer = () => {
     setIsPlaying,
     setCameraSequenceStep,
     setSettingsModalOpen,
-    setSelectedCamera,
   } = useMediaPlayerContext();
 
   const [volume, setVolume] = useState(35);
@@ -108,7 +107,6 @@ const MediaPlayer = () => {
         newState[0].folders[12].cameras[0].disabled = true;
         return newState;
       });
-      setSelectedCamera(null);
     }
   };
 
@@ -126,7 +124,6 @@ const MediaPlayer = () => {
         newState[0].folders[12].cameras[0].disabled = true;
         return newState;
       });
-      setSelectedCamera(null);
     }
   };
 
@@ -156,7 +153,7 @@ const MediaPlayer = () => {
   };
 
   useEffect(() => {
-    if (!videoUrl || !selectedCamera) return;
+    if (!currentVideo || !selectedCamera) return;
 
     if (shouldAutoplay || !selectedCamera?.sequence.length) {
       setIsPlaying(true);
@@ -166,21 +163,21 @@ const MediaPlayer = () => {
       setIsLoading(true);
       setTimeout(() => setIsLoading(false), 500);
     }
-  }, [videoUrl]);
+  }, [currentVideo]);
 
   return (
     <div className='media-player__wrapper'>
       <div className='media-player__video'>
-        {videoUrl ? (
+        {currentVideo ? (
           isLoading ? (
             <div className='loader'>
               <CircularProgress size={120} />
             </div>
           ) : selectedCamera?.videos[cameraSequenceStep].type === 'image' ? (
-            <img src={videoUrl} />
+            <img src={currentVideo.url} />
           ) : (
             <ReactPlayer
-              url={videoUrl}
+              url={currentVideo.url}
               height={'100%'}
               width={'100%'}
               volume={0}
@@ -193,7 +190,7 @@ const MediaPlayer = () => {
           )
         ) : null}
         {shouldShowVideoName && (
-          <div className='current-video-name'>{videoUrl}</div>
+          <div className='current-video-name'>{currentVideo?.url}</div>
         )}
       </div>
       <div className='media-player__controls'>
@@ -209,18 +206,32 @@ const MediaPlayer = () => {
           />
         </div>
         <div className='controls__controls'>
-          <IconButton onClick={() => handleSequenceControlClick('rewind')}>
+          <IconButton
+            onClick={() => handleSequenceControlClick('rewind')}
+            sx={
+              currentVideo && currentVideo?.isRewinded && isPlaying
+                ? activeButtonStyles
+                : {}
+            }
+          >
             <FastRewindIcon sx={iconStyles} />
           </IconButton>
           <IconButton
             onClick={() => handlePlayPauseClick(false)}
-            sx={videoUrl && !isPlaying ? activeButtonStyles : {}}
+            sx={currentVideo && !isPlaying ? activeButtonStyles : {}}
           >
             <PauseIcon sx={iconStyles} />
           </IconButton>
           <IconButton
             onClick={() => handlePlayPauseClick(true)}
-            sx={videoUrl && isPlaying ? activeButtonStyles : {}}
+            sx={
+              currentVideo &&
+              isPlaying &&
+              !currentVideo?.isRewinded &&
+              !currentVideo?.isFastforwared
+                ? activeButtonStyles
+                : {}
+            }
           >
             <PlayArrowIcon sx={iconStyles} />
           </IconButton>
@@ -245,7 +256,14 @@ const MediaPlayer = () => {
               }}
             >{`X${playbackSpeed}`}</Typography>
           </IconButton>
-          <IconButton onClick={() => handleSequenceControlClick('skip')}>
+          <IconButton
+            onClick={() => handleSequenceControlClick('skip')}
+            sx={
+              currentVideo && currentVideo?.isFastforwared && isPlaying
+                ? activeButtonStyles
+                : {}
+            }
+          >
             <FastForwardIcon sx={iconStyles} />
           </IconButton>
         </div>

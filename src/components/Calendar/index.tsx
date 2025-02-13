@@ -21,13 +21,17 @@ import { IconButton } from '@mui/material';
 import { COLORS } from '../../utils/colors';
 import { useMediaPlayerContext } from '../../contexts/mediaPlayerContext';
 
-const weekDays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
 const Calendar = () => {
   const {
     currentDay,
     currentMonth,
     currentYear,
+    cameraSequenceStep,
+    currentVideo,
+    selectedCamera,
+    setCameraSequenceStep,
     setCurrentDay,
     setCurrentMonth,
     setCurrentYear,
@@ -64,6 +68,25 @@ const Calendar = () => {
 
   const handleUpdateYear = (step: number) => {
     setCurrentYear((prevState) => prevState + step);
+  };
+
+  const handleUpdateDay = (day: Date) => {
+    setCurrentDay(day);
+    handleUpdateSequenceStep();
+  };
+
+  const handleUpdateSequenceStep = () => {
+    const newStep = cameraSequenceStep + 1;
+
+    if (
+      !currentVideo ||
+      !selectedCamera ||
+      selectedCamera?.videos.length <= newStep
+    ) {
+      return;
+    }
+
+    setCameraSequenceStep(newStep);
   };
 
   return (
@@ -116,7 +139,7 @@ const Calendar = () => {
               key={day}
               className='calendar__day'
               style={{
-                color: index === 0 || index === 6 ? COLORS.blue : COLORS.white,
+                color: index === 5 || index === 6 ? COLORS.blue : COLORS.white,
               }}
             >
               {day}
@@ -133,14 +156,14 @@ const Calendar = () => {
                   ? COLORS.white
                   : !isSameMonth(day, date)
                   ? COLORS.lightGray
-                  : index === 0 || index % 7 === 0 || (index + 1) % 7 === 0
+                  : index % 7 === 5 || index % 7 === 6
                   ? COLORS.blue
                   : COLORS.white,
                 backgroundColor: isSameDay(day, currentDay)
                   ? COLORS.blue
                   : 'transparent',
               }}
-              onClick={() => setCurrentDay(day)}
+              onClick={() => handleUpdateDay(day)}
             >
               {format(day, 'd')}
             </div>

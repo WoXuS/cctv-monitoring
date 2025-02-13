@@ -13,10 +13,15 @@
   position: relative;
 }
 
+.line--disabled {
+  background-color: #a55c5c;
+}
+
 .timeline__time {
   margin: 16px auto 0 auto;
   width: fit-content;
   color: var(--white);
+  user-select: none;
 }
 
 .timeline__pointer {
@@ -40,6 +45,10 @@
   color: var(--white);
   font-size: 12px;
   padding-bottom: 10px;
+}
+
+.marker--disabled {
+  color: #d32f2f;
 }
 
 .line__marker::after {

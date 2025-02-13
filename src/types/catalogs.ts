@@ -1,12 +1,16 @@
+export interface Video {
+  type?: string;
+  url: string;
+  startTime: string;
+  endTime?: string;
+  isRewinded?: boolean;
+  isFastforwared?: boolean;
+}
+
 export interface Camera {
   name: string;
   disabled: boolean;
-  videos: {
-    type?: string;
-    url: string;
-    startTime: string;
-    endTime?: string;
-  }[];
+  videos: Video[];
   sequence: SequenceStepStype[];
   onSequenceEnd?: string;
 }
@@ -26,4 +30,5 @@ export type SequenceStepStype =
   | 'rewind'
   | 'play'
   | 'pause'
-  | 'timeline';
+  | 'timeline'
+  | 'calendar';

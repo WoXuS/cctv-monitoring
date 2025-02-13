@@ -7,7 +7,7 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { Camera, Catalog, Folder } from '../types/catalogs';
+import { Camera, Catalog, Folder, Video } from '../types/catalogs';
 import { startOfToday } from 'date-fns';
 import { DEFAULT_DATE, DEFAULT_MONTH, DEFAULT_YEAR } from '../utils/defaults';
 import { catalogsData as initialCatalogsData } from '../utils/data';
@@ -27,7 +27,7 @@ interface MediaPlayerContextProps {
   setCurrentMonth: Dispatch<SetStateAction<number>>;
   currentYear: number;
   setCurrentYear: Dispatch<SetStateAction<number>>;
-  videoUrl: string | null;
+  currentVideo: Video | null;
   cameraSequenceStep: number;
   setCameraSequenceStep: Dispatch<SetStateAction<number>>;
   timelineMarkerOffset: number;
@@ -68,7 +68,7 @@ export const MediaPlayerContext = createContext<MediaPlayerContextProps>({
   setCurrentMonth: () => {},
   currentYear: 2025,
   setCurrentYear: () => {},
-  videoUrl: null,
+  currentVideo: null,
   cameraSequenceStep: 0,
   setCameraSequenceStep: () => {},
   timelineMarkerOffset: 12,
@@ -110,10 +110,10 @@ export const MediaPlayerContextProvider = ({
   const [shouldLoad, setShouldLoad] = useState(false);
   const [shouldShowVideoName, setShouldShowVideoName] = useState(false);
 
-  const videoUrl = useMemo(() => {
+  const currentVideo = useMemo(() => {
     if (!selectedCamera || !selectedCamera.videos.length) return null;
 
-    return selectedCamera.videos[cameraSequenceStep].url;
+    return selectedCamera.videos[cameraSequenceStep];
   }, [selectedCamera, cameraSequenceStep]);
 
   const handleResetAppState = () => {
@@ -149,7 +149,7 @@ export const MediaPlayerContextProvider = ({
         setCurrentMonth,
         currentYear,
         setCurrentYear,
-        videoUrl,
+        currentVideo,
         cameraSequenceStep,
         setCameraSequenceStep,
         timelineMarkerOffset,
