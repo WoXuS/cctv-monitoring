@@ -195,6 +195,7 @@ export const catalogsData: Catalog[] = [
                 endTime: '01:49:14',
               },
               {
+                type: 'image',
                 url: '/images/13-14-15.png',
                 startTime: '01:49:14',
               },
