@@ -42,7 +42,6 @@ const activeButtonStyles = {
 
 const MediaPlayer = () => {
   const {
-    catalogsData,
     currentVideo,
     selectedCamera,
     playbackSpeed,
@@ -161,16 +160,6 @@ const MediaPlayer = () => {
   useEffect(() => {
     if (!currentVideo || !selectedCamera) return;
 
-    // fml
-    // setting custom sequences
-
-    if (
-      selectedCamera.name === 'CAM_041' &&
-      catalogsData[0].folders[12].cameras[0].disabled
-    ) {
-      setCameraSequenceStep(4);
-    }
-
     setIsPlaying(false);
 
     if (shouldAutoplay || !selectedCamera?.sequence.length) {
@@ -182,6 +171,12 @@ const MediaPlayer = () => {
       setTimeout(() => setIsLoading(false), 500);
     }
   }, [currentVideo]);
+
+  useEffect(() => {
+    if (!selectedCamera || !selectedCamera.disabled) return;
+
+    setIsPlaying(false);
+  }, [selectedCamera]);
 
   return (
     <div className='media-player__wrapper'>

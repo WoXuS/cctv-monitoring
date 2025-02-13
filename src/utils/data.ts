@@ -38,17 +38,48 @@ export const catalogsData: Catalog[] = [
             ],
             sequence: [],
             disabled: false,
+            wasPlayed: false,
           },
-          { name: 'CAM_060', videos: [], sequence: [], disabled: false },
-          { name: 'CAM_061', videos: [], sequence: [], disabled: false },
-          { name: 'CAM_062', videos: [], sequence: [], disabled: false },
+          {
+            name: 'CAM_060',
+            videos: [],
+            sequence: [],
+            disabled: false,
+            wasPlayed: false,
+          },
+          {
+            name: 'CAM_061',
+            videos: [],
+            sequence: [],
+            disabled: false,
+            wasPlayed: false,
+          },
+          {
+            name: 'CAM_062',
+            videos: [],
+            sequence: [],
+            disabled: false,
+            wasPlayed: false,
+          },
         ],
       },
       {
         name: 'Krakowska',
         cameras: [
-          { name: 'CAM_055', videos: [], sequence: [], disabled: false },
-          { name: 'CAM_056', videos: [], sequence: [], disabled: false },
+          {
+            name: 'CAM_055',
+            videos: [],
+            sequence: [],
+            disabled: false,
+            wasPlayed: false,
+          },
+          {
+            name: 'CAM_056',
+            videos: [],
+            sequence: [],
+            disabled: false,
+            wasPlayed: false,
+          },
           {
             name: 'CAM_057',
             videos: [
@@ -60,6 +91,7 @@ export const catalogsData: Catalog[] = [
             ],
             sequence: [],
             disabled: false,
+            wasPlayed: false,
           },
         ],
       },
@@ -86,17 +118,17 @@ export const catalogsData: Catalog[] = [
             ],
             sequence: ['skip'],
             disabled: false,
+            wasPlayed: false,
           },
           {
             name: 'CAM_021',
             videos: [
-              // this is played as one video
               {
                 url: '/videos/44.mp4',
                 startTime: '02:10:47',
                 endTime: '02:10:51',
               },
-              //this is a separate sequence after switching to other camera and going back
+              // next seq
               {
                 url: '/videos/49.mp4',
                 startTime: '07:52:26',
@@ -108,9 +140,9 @@ export const catalogsData: Catalog[] = [
                 startTime: '16:23:34',
               },
             ],
-            // todo figure this sequence out
             sequence: ['play', 'calendar'],
             disabled: false,
+            wasPlayed: false,
           },
           {
             name: 'CAM_022',
@@ -125,7 +157,7 @@ export const catalogsData: Catalog[] = [
                 startTime: '07:52:07',
                 endTime: '07:52:29',
               },
-              //to do next seq
+              // next seq
               {
                 type: 'image',
                 url: '/images/59.jpg',
@@ -134,8 +166,15 @@ export const catalogsData: Catalog[] = [
             ],
             sequence: ['timeline', 'calendar'],
             disabled: false,
+            wasPlayed: false,
           },
-          { name: 'CAM_023', videos: [], sequence: [], disabled: false },
+          {
+            name: 'CAM_023',
+            videos: [],
+            sequence: [],
+            disabled: false,
+            wasPlayed: false,
+          },
           {
             name: 'CAM_024',
             videos: [
@@ -147,6 +186,7 @@ export const catalogsData: Catalog[] = [
             ],
             sequence: [],
             disabled: false,
+            wasPlayed: false,
           },
         ],
       },
@@ -164,8 +204,15 @@ export const catalogsData: Catalog[] = [
             ],
             sequence: [],
             disabled: false,
+            wasPlayed: false,
           },
-          { name: 'CAM_026', videos: [], sequence: [], disabled: false },
+          {
+            name: 'CAM_026',
+            videos: [],
+            sequence: [],
+            disabled: false,
+            wasPlayed: false,
+          },
           {
             name: 'CAM_027',
             videos: [
@@ -177,8 +224,15 @@ export const catalogsData: Catalog[] = [
             ],
             sequence: [],
             disabled: false,
+            wasPlayed: false,
           },
-          { name: 'CAM_028', videos: [], sequence: [], disabled: false },
+          {
+            name: 'CAM_028',
+            videos: [],
+            sequence: [],
+            disabled: false,
+            wasPlayed: false,
+          },
         ],
       },
       {
@@ -246,6 +300,7 @@ export const catalogsData: Catalog[] = [
             ],
             onSequenceEnd: 'disable-camera',
             disabled: false,
+            wasPlayed: false,
           },
           {
             name: 'CAM_041',
@@ -271,7 +326,7 @@ export const catalogsData: Catalog[] = [
                 startTime: '01:48:34',
                 endTime: '01:48:29',
               },
-              //other seq
+              // next seq
               {
                 url: '/videos/32.mp4',
                 startTime: '01:52:13',
@@ -280,6 +335,7 @@ export const catalogsData: Catalog[] = [
             ],
             sequence: ['pause', 'play', 'rewind'],
             disabled: false,
+            wasPlayed: false,
           },
           {
             name: 'CAM_042',
@@ -292,6 +348,7 @@ export const catalogsData: Catalog[] = [
             ],
             sequence: [],
             disabled: false,
+            wasPlayed: false,
           },
           {
             name: 'CAM_044',
@@ -304,6 +361,7 @@ export const catalogsData: Catalog[] = [
             ],
             sequence: [],
             disabled: false,
+            wasPlayed: false,
           },
           {
             name: 'CAM_045',
@@ -316,6 +374,7 @@ export const catalogsData: Catalog[] = [
             ],
             sequence: [],
             disabled: false,
+            wasPlayed: false,
           },
         ],
       },

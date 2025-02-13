@@ -12,6 +12,7 @@ const Catalogs = () => {
     selectedFolder,
     selectedCamera,
     catalogsData,
+    setCatalogsData,
     setSelectedCatalog,
     setSelectedFolder,
     setSelectedCamera,
@@ -19,11 +20,43 @@ const Catalogs = () => {
   } = useMediaPlayerContext();
 
   const handleCameraClick = (camera: Camera) => {
-    if (
-      camera.name === 'CAM_041' &&
-      catalogsData[0].folders[12].cameras[0].disabled
-    ) {
-      setCameraSequenceStep(4);
+    // fml
+    // setting custom sequences
+    if (selectedCatalog && selectedFolder && selectedCamera && camera) {
+      setCatalogsData((prevState) => {
+        const newState = [...prevState];
+
+        const catalogIndex = catalogsData.indexOf(selectedCatalog);
+        const folderIndex =
+          catalogsData[catalogIndex].folders.indexOf(selectedFolder);
+        const cameraIndex =
+          catalogsData[catalogIndex].folders[folderIndex].cameras.indexOf(
+            selectedCamera
+          );
+
+        newState[catalogIndex].folders[folderIndex].cameras[
+          cameraIndex
+        ].wasPlayed = true;
+
+        return newState;
+      });
+    }
+
+    if (camera.wasPlayed) {
+      switch (camera.name) {
+        case 'CAM_041': {
+          setCameraSequenceStep(4);
+          break;
+        }
+        case 'CAM_021': {
+          setCameraSequenceStep(1);
+          break;
+        }
+        case 'CAM_022': {
+          setCameraSequenceStep(2);
+          break;
+        }
+      }
     } else {
       setCameraSequenceStep(0);
     }

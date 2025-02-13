@@ -10,6 +10,7 @@ export interface Video {
 export interface Camera {
   name: string;
   disabled: boolean;
+  wasPlayed: boolean;
   videos: Video[];
   sequence: SequenceStepStype[];
   onSequenceEnd?: string;
