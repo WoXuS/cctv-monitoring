@@ -60,6 +60,29 @@ const MediaPlayer = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [timeRatio, setTimeRatio] = useState(1);
 
+  const handleAutoControls = () => {
+    if (!currentVideo) return;
+
+    if (currentVideo.rewinded?.start) {
+      setTimeout(() => setFastControl('rewind'), currentVideo.rewinded.start);
+    }
+
+    if (currentVideo.rewinded?.end) {
+      setTimeout(() => setFastControl(null), currentVideo.rewinded.end);
+    }
+
+    if (currentVideo.fastForwarded?.start) {
+      setTimeout(
+        () => setFastControl('forward'),
+        currentVideo.fastForwarded.start
+      );
+    }
+
+    if (currentVideo.fastForwarded?.end) {
+      setTimeout(() => setFastControl(null), currentVideo.fastForwarded.end);
+    }
+  };
+
   const handleUpdateVolume = (_: Event, newValue: number | number[]) => {
     setVolume(newValue as number);
   };
@@ -73,6 +96,7 @@ const MediaPlayer = () => {
     if (!selectedCamera) return;
 
     setIsPlaying(play);
+    handleAutoControls();
 
     const control = play ? 'play' : 'pause';
 
@@ -150,29 +174,32 @@ const MediaPlayer = () => {
   };
 
   const handleVideoReady = () => {
+    if (!currentVideo) return;
+
     setIsLoading(false);
     setIsPlaying(false);
 
     if (shouldAutoplay || !selectedCamera?.sequence.length) {
+      handleAutoControls();
       setIsPlaying(true);
     }
   };
 
   const handleRewindClick = () => {
-    setFastControl('rewind');
+    setFastControl(fastControl === 'rewind' ? null : 'rewind');
     handleSequenceControlClick('rewind');
   };
 
   const handleForwardClick = () => {
-    setFastControl('forward');
+    setFastControl(fastControl === 'forward' ? null : 'forward');
     handleSequenceControlClick('skip');
   };
 
   useEffect(() => {
     if (!currentVideo) return;
 
-    setFastControl(null);
     setIsLoading(true);
+    setFastControl(null);
   }, [currentVideo]);
 
   useEffect(() => {
@@ -237,7 +264,7 @@ const MediaPlayer = () => {
               !selectedCamera?.disabled &&
               currentVideo &&
               isPlaying &&
-              (currentVideo?.isRewinded || fastControl === 'rewind')
+              fastControl === 'rewind'
                 ? activeButtonStyles
                 : {}
             }
@@ -260,8 +287,7 @@ const MediaPlayer = () => {
               !selectedCamera?.disabled &&
               currentVideo &&
               isPlaying &&
-              !currentVideo?.isRewinded &&
-              !currentVideo?.isFastforwared
+              !fastControl
                 ? activeButtonStyles
                 : {}
             }
@@ -295,7 +321,7 @@ const MediaPlayer = () => {
               !selectedCamera?.disabled &&
               currentVideo &&
               isPlaying &&
-              (currentVideo?.isFastforwared || fastControl === 'forward')
+              fastControl === 'forward'
                 ? activeButtonStyles
                 : {}
             }

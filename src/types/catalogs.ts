@@ -3,11 +3,13 @@ export interface Video {
   url: string;
   startTime: string;
   endTime?: string;
-  isRewinded?: boolean;
-  isFastforwared?: boolean;
   rewinded?: {
-    start: string;
-    end: string;
+    start: number;
+    end?: number;
+  };
+  fastForwarded?: {
+    start: number;
+    end?: number;
   };
 }
 

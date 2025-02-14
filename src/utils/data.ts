@@ -133,6 +133,10 @@ export const catalogsData: Catalog[] = [
                 url: '/videos/49.mp4',
                 startTime: '07:52:26',
                 endTime: '07:54:00',
+                fastForwarded: {
+                  start: 1,
+                  end: 3400,
+                },
               },
               {
                 type: 'image',
@@ -309,7 +313,9 @@ export const catalogsData: Catalog[] = [
                 url: '/videos/4.mp4',
                 startTime: '04:03:03',
                 endTime: '01:34:17',
-                isRewinded: true,
+                rewinded: {
+                  start: 1,
+                },
               },
               {
                 url: '/videos/6.mp4',
@@ -320,21 +326,27 @@ export const catalogsData: Catalog[] = [
                 url: '/videos/8.mp4',
                 startTime: '01:34:02',
                 endTime: '01:48:37',
-                rewinded: {
-                  start: '01:34:09',
-                  end: '01:48:37',
+                fastForwarded: {
+                  start: 6400,
                 },
               },
               {
                 url: '/videos/10.mp4',
                 startTime: '01:48:34',
                 endTime: '01:48:29',
+                rewinded: {
+                  start: 1,
+                  end: 1300,
+                },
               },
               // next seq
               {
                 url: '/videos/32.mp4',
                 startTime: '01:52:13',
                 endTime: '01:52:35',
+                fastForwarded: {
+                  start: 5050,
+                },
               },
             ],
             sequence: ['pause', 'play', 'rewind'],
