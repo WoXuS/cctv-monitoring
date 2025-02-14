@@ -85,7 +85,7 @@ const Timeline = ({ timeRatio }: TimelineProps) => {
                 left: `${timelineMarkerOffset + index * 120}px`,
               }}
             >
-              {marker}
+              {/* {marker} */}
             </div>
           ))}
       </div>

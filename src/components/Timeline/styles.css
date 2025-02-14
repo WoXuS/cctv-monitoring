@@ -42,7 +42,8 @@
 
 .line__marker {
   position: absolute;
-  top: -30px;
+  /* top: -30px; */
+  top: -16px;
   color: var(--white);
   font-size: 12px;
   padding-bottom: 10px;
