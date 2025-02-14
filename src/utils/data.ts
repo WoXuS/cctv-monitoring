@@ -286,6 +286,10 @@ export const catalogsData: Catalog[] = [
               {
                 url: '/videos/22-25.mp4',
                 startTime: '01:52:20',
+                rewinded: {
+                  start: 1,
+                  end: 4200,
+                },
               },
               {
                 url: '/videos/28.mp4',
