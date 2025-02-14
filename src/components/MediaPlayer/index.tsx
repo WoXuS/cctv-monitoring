@@ -46,6 +46,8 @@ const MediaPlayer = () => {
     shouldAutoplay,
     shouldShowVideoName,
     currentDay,
+    fastControl,
+    setFastControl,
     setCurrentTime,
     setCatalogsData,
     setPlaybackSpeed,
@@ -156,9 +158,20 @@ const MediaPlayer = () => {
     }
   };
 
+  const handleRewindClick = () => {
+    setFastControl('rewind');
+    handleSequenceControlClick('rewind');
+  };
+
+  const handleForwardClick = () => {
+    setFastControl('forward');
+    handleSequenceControlClick('skip');
+  };
+
   useEffect(() => {
     if (!currentVideo) return;
 
+    setFastControl(null);
     setIsLoading(true);
   }, [currentVideo]);
 
@@ -219,12 +232,12 @@ const MediaPlayer = () => {
         </div>
         <div className='controls__controls'>
           <IconButton
-            onClick={() => handleSequenceControlClick('rewind')}
+            onClick={handleRewindClick}
             sx={
               !selectedCamera?.disabled &&
               currentVideo &&
-              currentVideo?.isRewinded &&
-              isPlaying
+              isPlaying &&
+              (currentVideo?.isRewinded || fastControl === 'rewind')
                 ? activeButtonStyles
                 : {}
             }
@@ -277,12 +290,12 @@ const MediaPlayer = () => {
             >{`X${playbackSpeed}`}</Typography>
           </IconButton>
           <IconButton
-            onClick={() => handleSequenceControlClick('skip')}
+            onClick={handleForwardClick}
             sx={
               !selectedCamera?.disabled &&
               currentVideo &&
-              currentVideo?.isFastforwared &&
-              isPlaying
+              isPlaying &&
+              (currentVideo?.isFastforwared || fastControl === 'forward')
                 ? activeButtonStyles
                 : {}
             }

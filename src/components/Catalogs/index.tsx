@@ -4,7 +4,7 @@ import VideocamOffIcon from '@mui/icons-material/VideocamOff';
 import './styles.css';
 import { COLORS } from '../../utils/colors';
 import { useMediaPlayerContext } from '../../contexts/mediaPlayerContext';
-import { Camera } from '../../types/catalogs';
+import { Camera, Catalog, Folder } from '../../types/catalogs';
 
 const Catalogs = () => {
   const {
@@ -34,9 +34,11 @@ const Catalogs = () => {
             selectedCamera
           );
 
-        newState[catalogIndex].folders[folderIndex].cameras[
-          cameraIndex
-        ].wasPlayed = true;
+        if (newState[catalogIndex].folders[folderIndex].cameras[cameraIndex]) {
+          newState[catalogIndex].folders[folderIndex].cameras[
+            cameraIndex
+          ].wasPlayed = true;
+        }
 
         return newState;
       });
@@ -64,6 +66,21 @@ const Catalogs = () => {
     setSelectedCamera(camera);
   };
 
+  const handleSelectCatalog = (catalog: Catalog) => {
+    if (catalog.name === selectedCatalog?.name) return;
+
+    setSelectedCatalog(catalog);
+    setSelectedFolder(null);
+    setSelectedCamera(null);
+  };
+
+  const handleSelectFolder = (folder: Folder) => {
+    if (folder.name === selectedFolder?.name) return;
+
+    setSelectedFolder(folder);
+    setSelectedCamera(null);
+  };
+
   return (
     <div className='catalogs__wrapper'>
       <div className='catalogs__catalogs'>
@@ -77,7 +94,7 @@ const Catalogs = () => {
                   ? '--selected '
                   : ''
               }section__row`}
-              onClick={() => setSelectedCatalog(catalog)}
+              onClick={() => handleSelectCatalog(catalog)}
             >
               <FolderIcon sx={{ color: COLORS.blue }} />
               <p>{catalog.name}</p>
@@ -96,7 +113,7 @@ const Catalogs = () => {
                   ? '--selected '
                   : ''
               }section__row`}
-              onClick={() => setSelectedFolder(folder)}
+              onClick={() => handleSelectFolder(folder)}
             >
               <FolderIcon sx={{ color: COLORS.blue }} />
               <p>{`${index < 9 ? `0${index + 1}` : index + 1}_${

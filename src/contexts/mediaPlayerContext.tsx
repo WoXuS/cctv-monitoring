@@ -44,6 +44,8 @@ interface MediaPlayerContextProps {
   setShouldAutoplay: Dispatch<SetStateAction<boolean>>;
   shouldShowVideoName: boolean;
   setShouldShowVideoName: Dispatch<SetStateAction<boolean>>;
+  fastControl: 'rewind' | 'forward' | null;
+  setFastControl: Dispatch<SetStateAction<'rewind' | 'forward' | null>>;
   handleResetAppState: () => void;
 }
 
@@ -83,6 +85,8 @@ export const MediaPlayerContext = createContext<MediaPlayerContextProps>({
   setShouldAutoplay: () => {},
   shouldShowVideoName: false,
   setShouldShowVideoName: () => {},
+  fastControl: null,
+  setFastControl: () => {},
   handleResetAppState: () => {},
 });
 
@@ -106,12 +110,15 @@ export const MediaPlayerContextProvider = ({
   const [settingsModalOpen, setSettingsModalOpen] = useState(false);
   const [shouldAutoplay, setShouldAutoplay] = useState(false);
   const [shouldShowVideoName, setShouldShowVideoName] = useState(false);
+  const [fastControl, setFastControl] = useState<'rewind' | 'forward' | null>(
+    null
+  );
 
   const currentVideo = useMemo(() => {
     if (!selectedCamera || !selectedCamera.videos.length) return null;
 
     return selectedCamera.videos[cameraSequenceStep];
-  }, [selectedCamera, cameraSequenceStep]);
+  }, [selectedCamera, cameraSequenceStep, selectedCatalog, selectedFolder]);
 
   const handleResetAppState = () => {
     setCatalogsData(initialCatalogsData);
@@ -126,6 +133,7 @@ export const MediaPlayerContextProvider = ({
     setTimelineMarkerOffset(12);
     setIsPlaying(false);
     setPlaybackSpeed(1);
+    setFastControl(null);
   };
 
   return (
@@ -162,6 +170,8 @@ export const MediaPlayerContextProvider = ({
         setShouldAutoplay,
         shouldShowVideoName,
         setShouldShowVideoName,
+        fastControl,
+        setFastControl,
         handleResetAppState,
       }}
     >
