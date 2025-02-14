@@ -305,6 +305,7 @@ export const catalogsData: Catalog[] = [
               'timeline',
               'rewind',
               'skip',
+              'play',
             ],
             onSequenceEnd: 'disable-camera',
             disabled: false,

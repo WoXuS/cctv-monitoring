@@ -47,6 +47,7 @@ const MediaPlayer = () => {
     shouldShowVideoName,
     currentDay,
     fastControl,
+    currentTime,
     setFastControl,
     setCurrentTime,
     setCatalogsData,
@@ -101,6 +102,23 @@ const MediaPlayer = () => {
     const control = play ? 'play' : 'pause';
 
     if (control === 'play' && isPlaying === false) {
+      if (
+        cameraSequenceStep === 7 &&
+        selectedCamera.name === 'CAM_039' &&
+        !isPlaying &&
+        currentVideo &&
+        currentTime.getTime() !==
+          getTimeDate(currentDay, currentVideo.startTime).getTime()
+      ) {
+        console.log({ currentTime, currentVideo: currentVideo?.startTime });
+        setCatalogsData((prevState) => {
+          const newState = [...prevState];
+          newState[0].folders[12].cameras[0].disabled = true;
+          return newState;
+        });
+        return;
+      }
+
       setIsPlaying(true);
       return;
     }
@@ -127,12 +145,6 @@ const MediaPlayer = () => {
       } else if (control !== 'pause') {
         setIsPlaying(true);
       }
-    } else if (selectedCamera?.onSequenceEnd === 'disable-camera') {
-      setCatalogsData((prevState) => {
-        const newState = [...prevState];
-        newState[0].folders[12].cameras[0].disabled = true;
-        return newState;
-      });
     }
   };
 
