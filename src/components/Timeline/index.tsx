@@ -62,11 +62,12 @@ const Timeline = ({ timeRatio }: TimelineProps) => {
       currentTime
     );
 
-    setTimelineMarkerOffset(612 + timeDiff);
+    setTimelineMarkerOffset(626 + timeDiff);
   }, [currentTime]);
 
   return (
     <div className='media-player__timeline' onClick={handleTimelineClick}>
+      <div className='timeline__time'>{format(currentTime, 'HH:mm:ss')}</div>
       <div
         className={`timeline__line${
           selectedCamera?.disabled ? ' line--disabled' : ''
@@ -89,7 +90,7 @@ const Timeline = ({ timeRatio }: TimelineProps) => {
             </div>
           ))}
       </div>
-      <div className='timeline__time'>{format(currentTime, 'HH:mm:ss')}</div>
+
       <div className='timeline__pointer'></div>
     </div>
   );
